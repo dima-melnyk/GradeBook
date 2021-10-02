@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F7791E56-2DED-4EDA-A777-50EFA9096175}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeBook.API", "GradeBook.API\GradeBook.API.csproj", "{584E6B36-5E87-463A-9594-4364FB1C1102}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeBook.BusinessLogic", "GradeBook.BusinessLogic\GradeBook.BusinessLogic.csproj", "{4937A70E-C767-4431-B399-95F9B9016DF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeBook.DataAccess", "GradeBook.DataAccess\GradeBook.DataAccess.csproj", "{356E276F-D21F-4825-949F-7AAFD9A13E5F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{584E6B36-5E87-463A-9594-4364FB1C1102}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{584E6B36-5E87-463A-9594-4364FB1C1102}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{584E6B36-5E87-463A-9594-4364FB1C1102}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{584E6B36-5E87-463A-9594-4364FB1C1102}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4937A70E-C767-4431-B399-95F9B9016DF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4937A70E-C767-4431-B399-95F9B9016DF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4937A70E-C767-4431-B399-95F9B9016DF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4937A70E-C767-4431-B399-95F9B9016DF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{356E276F-D21F-4825-949F-7AAFD9A13E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{356E276F-D21F-4825-949F-7AAFD9A13E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{356E276F-D21F-4825-949F-7AAFD9A13E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{356E276F-D21F-4825-949F-7AAFD9A13E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {577E734B-40DB-4F80-A818-81DA841575F6}
+	EndGlobalSection
+EndGlobal
