@@ -28,11 +28,6 @@ namespace BookStore.Repository.Repositories
             }
         }
 
-        public TEntity GetById(int id)
-        {
-            return DbContext.Set<TEntity>().FirstOrDefault(i => i.Id);
-        }
-
         public TEntity Add(TEntity entity)
         {
             if (entity == null)
