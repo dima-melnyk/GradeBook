@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GradeBook.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.API
 {
@@ -32,6 +34,7 @@ namespace GradeBook.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GradeBook.API", Version = "v1" });
             });
+            services.AddDbContext<GBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GBDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
