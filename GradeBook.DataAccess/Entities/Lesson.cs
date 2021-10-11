@@ -15,6 +15,7 @@ namespace GradeBook.DataAccess.Entities
         public Subject Subject { get; set; }
 
         public DateTime Date { get; set; }
+#nullable enable
         public string? Theme { get; set; }
     }
 }

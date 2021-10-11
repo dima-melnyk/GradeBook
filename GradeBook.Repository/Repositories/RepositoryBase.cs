@@ -7,7 +7,7 @@ using GradeBook.Repository.Interfaces;
 namespace BookStore.Repository.Repositories
 {
 
-    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class, new()
+    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly GBContext DbContext;
 
@@ -25,24 +25,6 @@ namespace BookStore.Repository.Repositories
             catch (Exception ex)
             {
                 throw new ApplicationException($"Couldn't retrieve entities: {ex.Message}");
-            }
-        }
-
-        public TEntity Add(TEntity entity)
-        {
-            if (entity == null)
-                throw new ApplicationException($"{nameof(AddAsync)} entity must not be null");
-
-            try
-            {
-                DbContext.Add(entity);
-                DbContext.SaveChanges();
-
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException($"{nameof(entity)} could not be saved: {ex.Message}", ex);
             }
         }
 
@@ -64,24 +46,6 @@ namespace BookStore.Repository.Repositories
             }
         }
 
-        public TEntity Update(TEntity entity)
-        {
-            if (entity == null)
-                throw new ApplicationException($"{nameof(AddAsync)} entity must not be null");
-
-            try
-            {
-                DbContext.Update(entity);
-                DbContext.SaveChanges();
-
-                return entity;
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException($"{nameof(entity)} could not be updated: {ex.Message}", ex);
-            }
-        }
-
         public async Task<TEntity> UpdateAsync(TEntity entity)
         {
             if (entity == null)
@@ -93,22 +57,6 @@ namespace BookStore.Repository.Repositories
                 await DbContext.SaveChangesAsync();
 
                 return entity;
-            }
-            catch (Exception ex)
-            {
-                throw new ApplicationException($"{nameof(entity)} could not be updated: {ex.Message}", ex);
-            }
-        }
-
-        public void Remove(TEntity entity)
-        {
-            if (entity == null)
-                throw new ApplicationException($"{nameof(Remove)} entity must not be null");
-
-            try
-            {
-                DbContext.Remove(entity);
-                DbContext.SaveChangesAsync();
             }
             catch (Exception ex)
             {
