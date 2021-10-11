@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GradeBook.DataAccess\GradeBook.DataAccess.csproj" />
+    <ProjectReference Include="..\GradeBook.BusinessLogic\GradeBook.BusinessLogic.csproj" />
   </ItemGroup>
 
 </Project>
