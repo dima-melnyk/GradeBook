@@ -12,10 +12,12 @@ namespace GradeBook.API.Middlewares
     public class ErrorHandlerMiddleware
     {
         private RequestDelegate _next;
+        private ILogger _logger;
 
-        public ErrorHandlerMiddleware(RequestDelegate next)
+        public ErrorHandlerMiddleware(RequestDelegate next, ILoggerFactory loggerFactory)
         {
             _next = next;
+            _logger = loggerFactory.CreateLogger<ErrorHandlerMiddleware>();
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -40,6 +42,7 @@ namespace GradeBook.API.Middlewares
                 }
 
                 var result = JsonSerializer.Serialize(new { message = exception?.Message });
+                _logger.LogError(result);
                 await response.WriteAsync(result);
             }
             
