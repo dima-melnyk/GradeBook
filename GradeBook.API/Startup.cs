@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeBook.DataAccess;
+using GradeBook.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.API
@@ -46,6 +47,8 @@ namespace GradeBook.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GradeBook.API v1"));
             }
+
+            app.UseErrorHandler();
 
             app.UseHttpsRedirection();
 
