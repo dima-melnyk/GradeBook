@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -33,8 +32,11 @@ namespace GradeBook.API.Middlewares
 
                 switch (exception)
                 {
-                    case ApplicationException _:
+                    case ApplicationException:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
+                        break;
+                    case KeyNotFoundException:
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;

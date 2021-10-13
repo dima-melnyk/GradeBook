@@ -36,6 +36,8 @@ namespace GradeBook.API
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GradeBook.API", Version = "v1" });
             });
             services.AddDbContext<GBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GBDatabase")));
+            services.ConfigureCustomServices();
+            services.ConfigureMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
