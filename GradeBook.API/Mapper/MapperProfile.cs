@@ -14,7 +14,8 @@ namespace GradeBook.API.Mapper
                 ForMember(p => p.Birthday, opt => opt.MapFrom(pd => pd.Birthday.ToString()));
 
             CreateMap<CreateClassDTO, Class>();
-            CreateMap<Class, ClassDTO>();
+            CreateMap<Class, ClassDTO>()
+                .ForMember(c => c.PupilQuantity, opt => opt.MapFrom(cd => cd.Pupils.Count));
         }
     }
 }

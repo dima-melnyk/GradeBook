@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using GradeBook.DataAccess;
 using GradeBook.API.Extensions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace GradeBook.API
 {
@@ -35,7 +36,8 @@ namespace GradeBook.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GradeBook.API", Version = "v1" });
             });
-            services.AddDbContext<GBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("GBDatabase")));
+            services.AddDbContext<GBContext>(options => options.UseLazyLoadingProxies()
+                .UseSqlServer(Configuration.GetConnectionString("GBDatabase")));
             services.ConfigureCustomServices();
             services.ConfigureMapper();
         }
