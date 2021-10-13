@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using GradeBook.BusinessLogic.DTOs;
 using GradeBook.DataAccess.Entities;
-using System;
 
 namespace GradeBook.API.Mapper
 {
@@ -13,6 +12,9 @@ namespace GradeBook.API.Mapper
             CreateMap<UpdatePupilDTO, Pupil>();
             CreateMap<Pupil, PupilDTO>().
                 ForMember(p => p.Birthday, opt => opt.MapFrom(pd => pd.Birthday.ToString()));
+
+            CreateMap<CreateClassDTO, Class>();
+            CreateMap<Class, ClassDTO>();
         }
     }
 }

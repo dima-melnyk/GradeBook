@@ -41,8 +41,8 @@ namespace GradeBook.API.Controllers
             await _pupilService.UpdatePupil(id, updatePupil);
         }
 
-        [HttpDelete, Route("{id}")]
-        public async Task DeletePupil(int id)
+        [HttpDelete, Route("delete/{id}")]
+        public async Task DeletePupil([FromRoute] int id)
         {
             await _pupilService.DeletePupil(id);
         }

@@ -3,10 +3,6 @@ using GradeBook.BusinessLogic.Services;
 using GradeBook.Repository.Interfaces;
 using GradeBook.Repository.Repositories;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GradeBook.API.Extensions
 {
@@ -16,6 +12,7 @@ namespace GradeBook.API.Extensions
         {
             services.AddTransient(typeof(IEntityRepository<>), typeof(EntityRepository<>));
             services.AddTransient<IPupilService, PupilService>();
+            services.AddTransient<IClassService, ClassService>();
         }
     }
 }
