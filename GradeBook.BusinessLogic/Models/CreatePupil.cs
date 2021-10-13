@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace GradeBook.BusinessLogic.DTOs
+namespace GradeBook.BusinessLogic.Models
 {
-    public class CreatePupilDTO
+    public class CreatePupil
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

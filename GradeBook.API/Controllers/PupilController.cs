@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GradeBook.BusinessLogic.Interfaces;
-using GradeBook.BusinessLogic.DTOs;
+using GradeBook.BusinessLogic.Models;
 
 
 namespace GradeBook.API.Controllers
@@ -18,25 +18,25 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PupilDTO> GetPupils([FromQuery] int classId)
+        public IEnumerable<PupilToView> GetPupils([FromQuery] int classId)
         {
             return _pupilService.GetPupilsByClass(classId);
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<PupilDTO> GetPupil([FromRoute] int id)
+        public async Task<PupilToView> GetPupil([FromRoute] int id)
         {
             return await _pupilService.GetPupil(id);
         }
 
         [HttpPost]
-        public async Task CreatePupil([FromBody] CreatePupilDTO createPupil)
+        public async Task CreatePupil([FromBody] CreatePupil createPupil)
         {
             await _pupilService.CreatePupil(createPupil);
         }
 
         [HttpPut, Route("{id}")]
-        public async Task UpdatePupil([FromRoute] int id, [FromBody] UpdatePupilDTO updatePupil)
+        public async Task UpdatePupil([FromRoute] int id, [FromBody] UpdatePupil updatePupil)
         {
             await _pupilService.UpdatePupil(id, updatePupil);
         }

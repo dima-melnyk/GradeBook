@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GradeBook.BusinessLogic.DTOs;
+using GradeBook.BusinessLogic.Models;
 using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Repository.Interfaces;
@@ -18,7 +18,7 @@ namespace GradeBook.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task CreateClass(CreateClassDTO newClass)
+        public async Task CreateClass(CreateClass newClass)
         {
             var model = _mapper.Map<Class>(newClass);
             await _repository.AddAsync(model);
@@ -30,10 +30,10 @@ namespace GradeBook.BusinessLogic.Services
             await _repository.RemoveAsync(model);
         }
 
-        public async Task<ClassDTO> GetClass(int id)
+        public async Task<ClassToView> GetClass(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<ClassDTO>(model);
+            return _mapper.Map<ClassToView>(model);
         }
     }
 }

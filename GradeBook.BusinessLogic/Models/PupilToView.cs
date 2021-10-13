@@ -1,6 +1,6 @@
-﻿namespace GradeBook.BusinessLogic.DTOs
+﻿namespace GradeBook.BusinessLogic.Models
 {
-    public class PupilDTO
+    public class PupilToView
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

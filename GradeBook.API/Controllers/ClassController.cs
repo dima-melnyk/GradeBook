@@ -1,4 +1,4 @@
-﻿using GradeBook.BusinessLogic.DTOs;
+﻿using GradeBook.BusinessLogic.Models;
 using GradeBook.BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,13 +21,13 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<ClassDTO> GetClass([FromRoute] int id)
+        public async Task<ClassToView> GetClass([FromRoute] int id)
         {
             return await _classService.GetClass(id);
         }
 
         [HttpPost]
-        public async Task CreateClass([FromBody] CreateClassDTO createClass)
+        public async Task CreateClass([FromBody] CreateClass createClass)
         {
             await _classService.CreateClass(createClass);
         }
