@@ -18,10 +18,9 @@ namespace GradeBook.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task CreateClass(CreateClass newClass)
+        public async Task CreateClass(Class newClass)
         {
-            var model = _mapper.Map<Class>(newClass);
-            await _repository.AddAsync(model);
+            await _repository.AddAsync(newClass);
         }
 
         public async Task DeleteClass(int id)

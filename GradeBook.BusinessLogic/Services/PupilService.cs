@@ -20,18 +20,14 @@ namespace GradeBook.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task CreatePupil(CreatePupil newPupil)
+        public async Task CreatePupil(Pupil newPupil)
         {
-            var model = _mapper.Map<Pupil>(newPupil);
-            await _repository.AddAsync(model);
+            await _repository.AddAsync(newPupil);
         }
 
-        public async Task UpdatePupil(int id, UpdatePupil updatePupil)
+        public async Task UpdatePupil(Pupil updatePupil)
         {
-            var model = await _repository.GetByIdAsync(id);
-            var updateModel = _mapper.Map<Pupil>(updatePupil);
-            updateModel.Id = model.Id;
-            await _repository.UpdateAsync(updateModel);
+            await _repository.UpdateAsync(updatePupil);
         }
 
         public async Task DeletePupil(int id)

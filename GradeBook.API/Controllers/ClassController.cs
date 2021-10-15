@@ -1,11 +1,10 @@
 ﻿using GradeBook.BusinessLogic.Models;
+using GradeBook.API.Models;
 using GradeBook.BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
+using GradeBook.DataAccess.Entities;
+using AutoMapper;
 
 namespace GradeBook.API.Controllers
 {
@@ -14,13 +13,15 @@ namespace GradeBook.API.Controllers
     public class ClassController : ControllerBase
     {
         private IClassService _classService;
+        private IMapper _mapper;
 
-        public ClassController(IClassService classService)
+        public ClassController(IClassService classService, IMapper mapper)
         {
             _classService = classService;
+            _mapper = mapper;
         }
 
-        [HttpGet, Route("{id}")]
+        [HttpGet("{id}")]
         public async Task<ClassToView> GetClass([FromRoute] int id)
         {
             return await _classService.GetClass(id);
@@ -29,10 +30,11 @@ namespace GradeBook.API.Controllers
         [HttpPost]
         public async Task CreateClass([FromBody] CreateClass createClass)
         {
-            await _classService.CreateClass(createClass);
+            var model = _mapper.Map<Class>(createClass);
+            await _classService.CreateClass(model);
         }
 
-        [HttpDelete, Route("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task DeleteClass([FromRoute] int id)
         {
             await _classService.DeleteClass(id);

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GradeBook.API.Models;
 using GradeBook.BusinessLogic.Models;
 using GradeBook.DataAccess.Entities;
 

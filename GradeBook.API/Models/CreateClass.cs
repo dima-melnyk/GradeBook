@@ -1,4 +1,4 @@
-﻿namespace GradeBook.BusinessLogic.Models
+﻿namespace GradeBook.API.Models
 {
     public class CreateClass
     {

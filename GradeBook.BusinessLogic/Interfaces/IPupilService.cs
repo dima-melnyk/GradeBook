@@ -7,8 +7,8 @@ namespace GradeBook.BusinessLogic.Interfaces
 {
     public interface IPupilService
     {
-        Task CreatePupil(CreatePupil newPupil);
-        Task UpdatePupil(int id, UpdatePupil updatePupil);
+        Task CreatePupil(Pupil newPupil);
+        Task UpdatePupil(Pupil updatePupil);
         Task DeletePupil(int id);
         Task<PupilToView> GetPupil(int id);
         List<PupilToView> GetPupilsByClass(int classId);

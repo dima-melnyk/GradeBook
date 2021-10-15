@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GradeBook.BusinessLogic.Interfaces;
+using GradeBook.API.Models;
 using GradeBook.BusinessLogic.Models;
-
+using AutoMapper;
+using GradeBook.DataAccess.Entities;
 
 namespace GradeBook.API.Controllers
 {
@@ -12,9 +14,12 @@ namespace GradeBook.API.Controllers
     public class PupilController : ControllerBase
     {
         private IPupilService _pupilService;
-        public PupilController(IPupilService pupilService)
+        private IMapper _mapper;
+
+        public PupilController(IPupilService pupilService, IMapper mapper)
         {
             _pupilService = pupilService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -23,7 +28,7 @@ namespace GradeBook.API.Controllers
             return _pupilService.GetPupilsByClass(classId);
         }
 
-        [HttpGet, Route("{id}")]
+        [HttpGet("{id}")]
         public async Task<PupilToView> GetPupil([FromRoute] int id)
         {
             return await _pupilService.GetPupil(id);
@@ -32,16 +37,19 @@ namespace GradeBook.API.Controllers
         [HttpPost]
         public async Task CreatePupil([FromBody] CreatePupil createPupil)
         {
-            await _pupilService.CreatePupil(createPupil);
+            var model = _mapper.Map<Pupil>(createPupil);
+            await _pupilService.CreatePupil(model);
         }
 
-        [HttpPut, Route("{id}")]
+        [HttpPut("{id}")]
         public async Task UpdatePupil([FromRoute] int id, [FromBody] UpdatePupil updatePupil)
         {
-            await _pupilService.UpdatePupil(id, updatePupil);
+            var updateModel = _mapper.Map<Pupil>(updatePupil);
+            updateModel.Id = id;
+            await _pupilService.UpdatePupil(updateModel);
         }
 
-        [HttpDelete, Route("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task DeletePupil([FromRoute] int id)
         {
             await _pupilService.DeletePupil(id);

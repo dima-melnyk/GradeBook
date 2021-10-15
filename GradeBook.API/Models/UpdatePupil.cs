@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace GradeBook.BusinessLogic.Models
+namespace GradeBook.API.Models
 {
-    public class CreatePupil
+    public class UpdatePupil
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
