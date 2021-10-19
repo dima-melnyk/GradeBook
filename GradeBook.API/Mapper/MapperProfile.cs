@@ -22,6 +22,10 @@ namespace GradeBook.API.Mapper
 
             CreateMap<CreateTeacher, Teacher>();
             CreateMap<Teacher, TeacherToView>();
+
+            CreateMap<CreateLesson, Lesson>();
+            CreateMap<Lesson, LessonToView>()
+                .ForMember(l => l.TeacherName, opt => opt.MapFrom(lw => lw.Teacher.FirstName + " " + lw.Teacher.LastName));
         }
     }
 }
