@@ -13,6 +13,7 @@ namespace GradeBook.API.Extensions
             services.AddTransient(typeof(IEntityRepository<>), typeof(EntityRepository<>));
             services.AddTransient<IPupilService, PupilService>();
             services.AddTransient<IClassService, ClassService>();
+            services.AddTransient<ISubjectService, SubjectService>();
         }
     }
 }
