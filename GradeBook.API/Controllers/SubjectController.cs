@@ -3,16 +3,13 @@ using GradeBook.API.Models;
 using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GradeBook.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SubjectController : Controller
+    public class SubjectController : ControllerBase
     {
         private ISubjectService _subjectService;
         private IMapper _mapper;

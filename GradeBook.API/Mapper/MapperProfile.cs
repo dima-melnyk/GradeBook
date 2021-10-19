@@ -19,6 +19,9 @@ namespace GradeBook.API.Mapper
                 .ForMember(c => c.PupilQuantity, opt => opt.MapFrom(cd => cd.Pupils.Count));
 
             CreateMap<CreateSubject, Subject>();
+
+            CreateMap<CreateTeacher, Teacher>();
+            CreateMap<Teacher, TeacherToView>();
         }
     }
 }
