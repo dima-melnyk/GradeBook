@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GradeBook.Repository.Interfaces
@@ -9,5 +10,6 @@ namespace GradeBook.Repository.Interfaces
         Task<TEntity> AddAsync(TEntity entity);
         Task<TEntity> UpdateAsync(TEntity entity);
         Task RemoveAsync(TEntity entity);
+        Task RemoveRange(IEnumerable<TEntity> entities);
     }
 }

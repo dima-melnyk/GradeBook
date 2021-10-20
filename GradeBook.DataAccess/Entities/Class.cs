@@ -6,7 +6,7 @@ namespace GradeBook.DataAccess.Entities
     public class Class : EntityBase
     {
         public string Name { get; set; }
-        public List<Pupil> Pupils { get; set; }
-        public List<Lesson> Lessons { get; set; }
+        public virtual List<Pupil> Pupils { get; set; }
+        public virtual List<Lesson> Lessons { get; set; }
     }
 }

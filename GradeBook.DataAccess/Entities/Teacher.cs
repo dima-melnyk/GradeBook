@@ -5,6 +5,6 @@ namespace GradeBook.DataAccess.Entities
 {
     public class Teacher : UserBase
     {
-        public List<Lesson> Lessons { get; set; }
+        public virtual List<Lesson> Lessons { get; set; }
     }
 }

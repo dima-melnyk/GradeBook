@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GradeBook.DataAccess.Entities.Base;
 
 namespace GradeBook.DataAccess.Entities
@@ -6,13 +7,15 @@ namespace GradeBook.DataAccess.Entities
     public class Lesson : EntityBase
     {
         public int ClassId { get; set; }
-        public Class Class { get; set; }
+        public virtual Class Class { get; set; }
 
         public int TeacherId { get; set; }
-        public Teacher Teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }
 
         public int SubjectId { get; set; }
-        public Subject Subject { get; set; }
+        public virtual Subject Subject { get; set; }
+
+        public virtual List<Grade> Grades { get; set; }
 
         public DateTime Date { get; set; }
 #nullable enable

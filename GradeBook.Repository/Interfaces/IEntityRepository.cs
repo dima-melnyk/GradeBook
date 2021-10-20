@@ -7,5 +7,6 @@ namespace GradeBook.Repository.Interfaces
     public interface IEntityRepository<TEntity> : IRepository<TEntity> where TEntity: EntityBase
     {
         Task<TEntity> GetByIdAsync(int id);
+        Task RemoveByIdAsync(int id);
     }
 }

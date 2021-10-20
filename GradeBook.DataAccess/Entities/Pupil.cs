@@ -7,7 +7,7 @@ namespace GradeBook.DataAccess.Entities
     public class Pupil : UserBase
     {
         public int ClassId { get; set; }
-        public Class Class { get; set; }
-        public List<Grade> Grades { get; set; }
+        public virtual Class Class { get; set; }
+        public virtual List<Grade> Grades { get; set; } 
     }
 }
