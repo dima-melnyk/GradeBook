@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using GradeBook.API.Models;
+using GradeBook.Models.Read;
+using GradeBook.Models.Write;
 using GradeBook.BusinessLogic.Interfaces;
-using GradeBook.BusinessLogic.Models;
 using GradeBook.BusinessLogic.Queries;
 using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -24,16 +24,10 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<LessonToView> GetLesson([FromRoute] int id)
-        {
-            return await _lessonService.GetLesson(id);
-        }
+        public Task<LessonToView> GetLesson([FromRoute] int id) => _lessonService.GetLesson(id);
 
         [HttpGet]
-        public List<LessonToView> GetLessons([FromQuery] LessonQuery query)
-        {
-            return _lessonService.GetLessons(query);
-        }
+        public IEnumerable<LessonToView> GetLessons([FromQuery] LessonQuery query) => _lessonService.GetLessons(query);
 
         [HttpPost]
         public async Task CreateLesson([FromBody] CreateLesson createLesson)
@@ -43,9 +37,6 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task DeleteLesson([FromRoute] int id)
-        {
-            await _lessonService.DeleteLesson(id);
-        }
+        public Task DeleteLesson([FromRoute] int id) => _lessonService.DeleteLesson(id);
     }
 }

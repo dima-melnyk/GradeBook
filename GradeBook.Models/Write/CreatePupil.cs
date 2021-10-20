@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace GradeBook.API.Models
+namespace GradeBook.Models.Write
 {
-    public class UpdatePupil
+    public class CreatePupil
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

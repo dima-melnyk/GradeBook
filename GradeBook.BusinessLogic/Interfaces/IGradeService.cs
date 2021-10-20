@@ -1,4 +1,4 @@
-﻿using GradeBook.BusinessLogic.Models;
+﻿using GradeBook.Models.Read;
 using GradeBook.BusinessLogic.Queries;
 using GradeBook.DataAccess.Entities;
 using System.Collections.Generic;
@@ -12,6 +12,6 @@ namespace GradeBook.BusinessLogic.Interfaces
         Task UpdateGrade(Grade updateGrade);
         Task DeleteGrade(int id);
         Task<GradeToView> GetGrade(int id);
-        List<GradeToView> GetGrades(GradeQuery query);
+        IEnumerable<GradeToView> GetGrades(GradeQuery query);
     }
 }

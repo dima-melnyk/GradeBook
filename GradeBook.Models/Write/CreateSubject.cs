@@ -1,4 +1,4 @@
-﻿namespace GradeBook.API.Models
+﻿namespace GradeBook.Models.Write
 {
     public class CreateSubject
     {

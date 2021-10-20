@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using GradeBook.API.Models;
-using GradeBook.BusinessLogic.Models;
+using GradeBook.Models.Read;
+using GradeBook.Models.Write;
 using GradeBook.DataAccess.Entities;
 
 namespace GradeBook.API.Mapper

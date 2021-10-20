@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace GradeBook.API.Models
+namespace GradeBook.Models.Write
 {
-    public class UpdateGrade
+    public class CreateGrade
     {
         public int LessonId { get; set; }
         public int PupilId { get; set; }
@@ -14,5 +13,6 @@ namespace GradeBook.API.Models
         public bool IsAbsent { get; set; } = false;
 #nullable enable
         public string? Comment { get; set; }
+
     }
 }

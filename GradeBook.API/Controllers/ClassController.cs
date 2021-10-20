@@ -1,5 +1,5 @@
-﻿using GradeBook.BusinessLogic.Models;
-using GradeBook.API.Models;
+﻿using GradeBook.Models.Read;
+using GradeBook.Models.Write;
 using GradeBook.BusinessLogic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -22,10 +22,7 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ClassToView> GetClass([FromRoute] int id)
-        {
-            return await _classService.GetClass(id);
-        }
+        public Task<ClassToView> GetClass([FromRoute] int id) => _classService.GetClass(id);
 
         [HttpPost]
         public async Task CreateClass([FromBody] CreateClass createClass)
@@ -35,9 +32,6 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task DeleteClass([FromRoute] int id)
-        {
-            await _classService.DeleteClass(id);
-        }
+        public Task DeleteClass([FromRoute] int id) => _classService.DeleteClass(id);
     }
 }

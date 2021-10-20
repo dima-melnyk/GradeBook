@@ -1,5 +1,5 @@
 ﻿using GradeBook.BusinessLogic.Interfaces;
-using GradeBook.BusinessLogic.Models;
+using GradeBook.Models.Read;
 using GradeBook.Repository.Interfaces;
 using GradeBook.DataAccess.Entities;
 using System.Threading.Tasks;
@@ -20,21 +20,11 @@ namespace GradeBook.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task CreatePupil(Pupil newPupil)
-        {
-            await _repository.AddAsync(newPupil);
-        }
+        public Task CreatePupil(Pupil newPupil) => _repository.AddAsync(newPupil);
 
-        public async Task UpdatePupil(Pupil updatePupil)
-        {
-            await _repository.UpdateAsync(updatePupil);
-        }
+        public Task UpdatePupil(Pupil updatePupil) => _repository.UpdateAsync(updatePupil);
 
-        public async Task DeletePupil(int id)
-        {
-            var model = await _repository.GetByIdAsync(id);
-            await _repository.RemoveAsync(model);
-        }
+        public Task DeletePupil(int id) => _repository.RemoveByIdAsync(id);
 
         public async Task<PupilToView> GetPupil(int id)
         {
@@ -42,12 +32,9 @@ namespace GradeBook.BusinessLogic.Services
             return _mapper.Map<PupilToView>(model);
         }
 
-        public List<PupilToView> GetPupilsByClass(int classId)
-        {
-            return _repository.GetAll()
+        public IEnumerable<PupilToView> GetPupilsByClass(int classId) => _repository.GetAll()
                 .Where(p => p.ClassId == classId)
                 .Select(_mapper.Map<PupilToView>)
                 .ToList();
-        }
     }
 }

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GradeBook.BusinessLogic.Interfaces;
-using GradeBook.API.Models;
-using GradeBook.BusinessLogic.Models;
+using GradeBook.Models.Read;
+using GradeBook.Models.Write;
 using AutoMapper;
 using GradeBook.DataAccess.Entities;
 
@@ -23,16 +23,10 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PupilToView> GetPupils([FromQuery] int classId)
-        {
-            return _pupilService.GetPupilsByClass(classId);
-        }
+        public IEnumerable<PupilToView> GetPupils([FromQuery] int classId) => _pupilService.GetPupilsByClass(classId);
 
         [HttpGet("{id}")]
-        public async Task<PupilToView> GetPupil([FromRoute] int id)
-        {
-            return await _pupilService.GetPupil(id);
-        }
+        public Task<PupilToView> GetPupil([FromRoute] int id) => _pupilService.GetPupil(id);
 
         [HttpPost]
         public async Task CreatePupil([FromBody] CreatePupil createPupil)
@@ -50,9 +44,6 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task DeletePupil([FromRoute] int id)
-        {
-            await _pupilService.DeletePupil(id);
-        }
+        public Task DeletePupil([FromRoute] int id) => _pupilService.DeletePupil(id);
     }
 }

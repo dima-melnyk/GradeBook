@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using GradeBook.BusinessLogic.Interfaces;
-using GradeBook.BusinessLogic.Models;
+using GradeBook.Models.Read;
 using GradeBook.BusinessLogic.Queries;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Repository.Interfaces;
@@ -23,21 +23,11 @@ namespace GradeBook.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task CreateGrade(Grade newGrade)
-        {
-            await _repository.AddAsync(newGrade);
-        }
+        public Task CreateGrade(Grade newGrade) => _repository.AddAsync(newGrade);
 
-        public async Task UpdateGrade(Grade updateGrade)
-        {
-            await _repository.UpdateAsync(updateGrade);
-        }
+        public Task UpdateGrade(Grade updateGrade) => _repository.UpdateAsync(updateGrade);
 
-        public async Task DeleteGrade(int id)
-        {
-            var model = await _repository.GetByIdAsync(id);
-            await _repository.RemoveAsync(model);
-        }
+        public Task DeleteGrade(int id) => _repository.RemoveByIdAsync(id);
 
         public async Task<GradeToView> GetGrade(int id)
         {
@@ -45,15 +35,12 @@ namespace GradeBook.BusinessLogic.Services
             return _mapper.Map<GradeToView>(model);
         }
 
-        public List<GradeToView> GetGrades(GradeQuery query)
-        {
-            return _repository.GetAll()
+        public IEnumerable<GradeToView> GetGrades(GradeQuery query) => _repository.GetAll()
                 .Where(g => g.Pupil.Id == query.PupilId || query.PupilId == null)
                 .Where(g => g.Lesson.SubjectId == query.SubjectId || query.SubjectId == null)
                 .Where(g => g.Lesson.ClassId == query.ClassId || query.ClassId == null)
                 .Where(g => g.Lesson.Date.Equals(query.Date) || query.Date == null)
                 .Select(_mapper.Map<GradeToView>)
                 .ToList();
-        }
     }
 }

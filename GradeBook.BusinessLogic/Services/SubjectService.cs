@@ -14,9 +14,6 @@ namespace GradeBook.BusinessLogic.Services
             _repository = repository;
         }
 
-        public async Task CreateSubject(Subject newSubject)
-        {
-            await _repository.AddAsync(newSubject);
-        }
+        public Task CreateSubject(Subject newSubject) => _repository.AddAsync(newSubject);
     }
 }

@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GradeBook.BusinessLogic\GradeBook.BusinessLogic.csproj" />
+    <ProjectReference Include="..\GradeBook.Models\GradeBook.Models.csproj" />
   </ItemGroup>
 
 </Project>

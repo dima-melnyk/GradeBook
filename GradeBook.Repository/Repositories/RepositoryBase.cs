@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeBook.DataAccess;
@@ -77,6 +78,22 @@ namespace BookStore.Repository.Repositories
             catch (Exception ex)
             {
                 throw new ApplicationException($"{nameof(entity)} could not be updated: {ex.Message}", ex);
+            }
+        }
+
+        public async Task RemoveRange(IEnumerable<TEntity> entities)
+        {
+            if (entities == null)
+                throw new ApplicationException($"{nameof(RemoveRange)} entities must not be null");
+
+            try
+            {
+                DbContext.RemoveRange(entities);
+                await DbContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"{nameof(entities)} could not be updated: {ex.Message}", ex);
             }
         }
     }

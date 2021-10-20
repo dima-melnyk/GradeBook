@@ -2,7 +2,7 @@
 using GradeBook.BusinessLogic.Queries;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using GradeBook.BusinessLogic.Models;
+using GradeBook.Models.Read;
 
 namespace GradeBook.BusinessLogic.Interfaces
 {
@@ -11,6 +11,6 @@ namespace GradeBook.BusinessLogic.Interfaces
         Task CreateLesson(Lesson newLesson);
         Task DeleteLesson(int id);
         Task<LessonToView> GetLesson(int id);
-        List<LessonToView> GetLessons(LessonQuery query);
+        IEnumerable<LessonToView> GetLessons(LessonQuery query);
     }
 }

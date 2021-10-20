@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GradeBook.BusinessLogic.Models;
+using GradeBook.Models.Read;
 using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Repository.Interfaces;
@@ -18,16 +18,9 @@ namespace GradeBook.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public async Task CreateClass(Class newClass)
-        {
-            await _repository.AddAsync(newClass);
-        }
+        public Task CreateClass(Class newClass) => _repository.AddAsync(newClass);
 
-        public async Task DeleteClass(int id)
-        {
-            var model = await _repository.GetByIdAsync(id);
-            await _repository.RemoveAsync(model);
-        }
+        public Task DeleteClass(int id) => _repository.RemoveByIdAsync(id);
 
         public async Task<ClassToView> GetClass(int id)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GradeBook.API.Models
+namespace GradeBook.Models.Write
 {
     public class CreateLesson
     {

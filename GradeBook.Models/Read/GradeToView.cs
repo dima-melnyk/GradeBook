@@ -1,4 +1,4 @@
-﻿namespace GradeBook.BusinessLogic.Models
+﻿namespace GradeBook.Models.Read
 {
     public class GradeToView
     {

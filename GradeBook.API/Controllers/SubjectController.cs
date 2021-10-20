@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GradeBook.API.Models;
+using GradeBook.Models.Write;
 using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;

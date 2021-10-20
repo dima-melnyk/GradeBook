@@ -1,4 +1,4 @@
-﻿using GradeBook.BusinessLogic.Models;
+﻿using GradeBook.Models.Read;
 using GradeBook.DataAccess.Entities;
 using System.Threading.Tasks;
 

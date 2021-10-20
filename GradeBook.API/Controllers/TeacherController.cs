@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using GradeBook.API.Models;
+using GradeBook.Models.Read;
+using GradeBook.Models.Write;
 using GradeBook.BusinessLogic.Interfaces;
-using GradeBook.BusinessLogic.Models;
 using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -12,20 +12,17 @@ namespace GradeBook.API.Controllers
     [ApiController]
     public class TeacherController : ControllerBase
     {
-        private readonly ITeacherService _teacherService;
+        private readonly ITeacherManager _teacherService;
         private readonly IMapper _mapper;
 
-        public TeacherController(ITeacherService teacherService, IMapper mapper)
+        public TeacherController(ITeacherManager teacherService, IMapper mapper)
         {
             _teacherService = teacherService;
             _mapper = mapper;
         }
 
         [HttpGet("{id}")]
-        public async Task<TeacherToView> GetTeacher([FromRoute] int id)
-        {
-            return await _teacherService.GetTeacher(id);
-        }
+        public Task<TeacherToView> GetTeacher([FromRoute] int id) => _teacherService.GetTeacher(id);
 
         [HttpPost]
         public async Task CreateTeacher([FromBody] CreateTeacher createTeacher)
@@ -35,9 +32,6 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public async Task DeleteTeacher(int id)
-        {
-            await _teacherService.DeleteTeacher(id);
-        }
+        public Task DeleteTeacher(int id) => _teacherService.DeleteTeacher(id);
     }
 }
