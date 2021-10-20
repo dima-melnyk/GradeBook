@@ -11,8 +11,8 @@ namespace GradeBook.BusinessLogic.Services
 {
     public class PupilService : IPupilService
     {
-        private IEntityRepository<Pupil> _repository;
-        private IMapper _mapper;
+        private readonly IEntityRepository<Pupil> _repository;
+        private readonly IMapper _mapper;
 
         public PupilService(IEntityRepository<Pupil> repository, IMapper mapper)
         {

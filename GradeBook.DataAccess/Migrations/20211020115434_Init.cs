@@ -79,7 +79,7 @@ namespace GradeBook.DataAccess.Migrations
                     ClassId = table.Column<int>(type: "int", nullable: false),
                     TeacherId = table.Column<int>(type: "int", nullable: false),
                     SubjectId = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
                     Theme = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -111,10 +111,10 @@ namespace GradeBook.DataAccess.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LessonId = table.Column<int>(type: "int", nullable: true),
-                    PupilId = table.Column<int>(type: "int", nullable: true),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    PupilId = table.Column<int>(type: "int", nullable: false),
                     Mark = table.Column<int>(type: "int", nullable: false),
-                    IsAbsent = table.Column<bool>(type: "bit", nullable: false),
+                    IsAbsent = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -131,7 +131,7 @@ namespace GradeBook.DataAccess.Migrations
                         column: x => x.PupilId,
                         principalTable: "Pupils",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

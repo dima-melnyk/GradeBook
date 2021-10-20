@@ -4,22 +4,22 @@ using GradeBook.BusinessLogic.Models;
 using GradeBook.BusinessLogic.Queries;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Repository.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GradeBook.BusinessLogic.Services
 {
     public class LessonService : ILessonService
     {
-        private IEntityRepository<Lesson> _repository;
-        private IMapper _mapper;
+        private readonly IEntityRepository<Lesson> _repository;
+        private readonly IEntityRepository<Grade> _gradeRepository;
+        private readonly IMapper _mapper;
 
-        public LessonService(IEntityRepository<Lesson> repository, IMapper mapper)
+        public LessonService(IEntityRepository<Lesson> repository, IEntityRepository<Grade> gradeRepository, IMapper mapper)
         {
             _repository = repository;
+            _gradeRepository = gradeRepository;
             _mapper = mapper;
         }
 
@@ -31,6 +31,7 @@ namespace GradeBook.BusinessLogic.Services
         public async Task DeleteLesson(int id)
         {
             var model = await _repository.GetByIdAsync(id);
+            model.Grades.Select(async grade => await _gradeRepository.RemoveAsync(grade));
             await _repository.RemoveAsync(model);
         }
 

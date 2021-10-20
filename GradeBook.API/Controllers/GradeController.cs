@@ -15,8 +15,8 @@ namespace GradeBook.API.Controllers
     [ApiController]
     public class GradeController : ControllerBase
     {
-        private IGradeService _gradeService;
-        private IMapper _mapper;
+        private readonly IGradeService _gradeService;
+        private readonly IMapper _mapper;
 
         public GradeController(IGradeService gradeService, IMapper mapper)
         {

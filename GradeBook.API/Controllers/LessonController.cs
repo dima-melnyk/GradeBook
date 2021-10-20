@@ -14,8 +14,8 @@ namespace GradeBook.API.Controllers
     [ApiController]
     public class LessonController : ControllerBase
     {
-        private ILessonService _lessonService;
-        private IMapper _mapper;
+        private readonly ILessonService _lessonService;
+        private readonly IMapper _mapper;
 
         public LessonController(ILessonService lessonService, IMapper mapper)
         {

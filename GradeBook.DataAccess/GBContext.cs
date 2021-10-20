@@ -13,5 +13,15 @@ namespace GradeBook.DataAccess
         public DbSet<Grade> Grades { get; set; }
 
         public GBContext(DbContextOptions<GBContext> options) : base(options) { }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Grade>()
+                .Property(g => g.IsAbsent)
+                .HasDefaultValue(false);
+            builder.Entity<Lesson>()
+                .Property(l => l.Date)
+                .HasDefaultValueSql("getdate()");
+        }
     }
 }

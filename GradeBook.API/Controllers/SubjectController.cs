@@ -11,8 +11,8 @@ namespace GradeBook.API.Controllers
     [ApiController]
     public class SubjectController : ControllerBase
     {
-        private ISubjectService _subjectService;
-        private IMapper _mapper;
+        private readonly ISubjectService _subjectService;
+        private readonly IMapper _mapper;
 
         public SubjectController(ISubjectService subjectService, IMapper mapper)
         {

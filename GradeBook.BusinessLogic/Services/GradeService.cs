@@ -14,8 +14,8 @@ namespace GradeBook.BusinessLogic.Services
 {
     public class GradeService : IGradeService
     {
-        private IEntityRepository<Grade> _repository;
-        private IMapper _mapper;
+        private readonly IEntityRepository<Grade> _repository;
+        private readonly IMapper _mapper;
 
         public GradeService(IEntityRepository<Grade> repository, IMapper mapper)
         {

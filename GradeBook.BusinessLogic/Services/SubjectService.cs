@@ -7,7 +7,7 @@ namespace GradeBook.BusinessLogic.Services
 {
     public class SubjectService : ISubjectService
     {
-        private IEntityRepository<Subject> _repository;
+        private readonly IEntityRepository<Subject> _repository;
 
         public SubjectService(IEntityRepository<Subject> repository)
         {

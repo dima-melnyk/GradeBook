@@ -13,8 +13,8 @@ namespace GradeBook.API.Controllers
     [ApiController]
     public class PupilController : ControllerBase
     {
-        private IPupilService _pupilService;
-        private IMapper _mapper;
+        private readonly IPupilService _pupilService;
+        private readonly IMapper _mapper;
 
         public PupilController(IPupilService pupilService, IMapper mapper)
         {

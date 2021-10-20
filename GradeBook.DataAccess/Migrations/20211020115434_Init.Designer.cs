@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GradeBook.DataAccess.Migrations
 {
     [DbContext(typeof(GBContext))]
-    [Migration("20211006132205_Init")]
+    [Migration("20211020115434_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,7 +18,7 @@ namespace GradeBook.DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Class", b =>
@@ -47,15 +47,17 @@ namespace GradeBook.DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsAbsent")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
-                    b.Property<int?>("LessonId")
+                    b.Property<int>("LessonId")
                         .HasColumnType("int");
 
                     b.Property<int>("Mark")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PupilId")
+                    b.Property<int>("PupilId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -78,7 +80,9 @@ namespace GradeBook.DataAccess.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("getdate()");
 
                     b.Property<int>("SubjectId")
                         .HasColumnType("int");
@@ -165,12 +169,16 @@ namespace GradeBook.DataAccess.Migrations
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Grade", b =>
                 {
                     b.HasOne("GradeBook.DataAccess.Entities.Lesson", "Lesson")
-                        .WithMany()
-                        .HasForeignKey("LessonId");
+                        .WithMany("Grades")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GradeBook.DataAccess.Entities.Pupil", "Pupil")
                         .WithMany("Grades")
-                        .HasForeignKey("PupilId");
+                        .HasForeignKey("PupilId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Lesson");
 
@@ -220,6 +228,11 @@ namespace GradeBook.DataAccess.Migrations
                     b.Navigation("Lessons");
 
                     b.Navigation("Pupils");
+                });
+
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.Lesson", b =>
+                {
+                    b.Navigation("Grades");
                 });
 
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
