@@ -6,12 +6,14 @@ namespace GradeBook.DataAccess.Entities
 {
     public class Grade : EntityBase
     {  
+        public int LessonId { get; set; }
         public virtual Lesson Lesson { get; set; }
+
+        public int PupilId { get; set; }
         public virtual Pupil Pupil { get; set; }
 
-        [Range(1, 12)]
         public int Mark { get; set; }
-        public bool IsAbsent { get; set; } = true;
+        public bool IsAbsent { get; set; }
         public string Comment { get; set; }
     }
 }

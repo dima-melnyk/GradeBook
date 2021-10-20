@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using GradeBook.DataAccess.Entities.Base;
 
 namespace GradeBook.DataAccess.Entities
@@ -13,6 +14,8 @@ namespace GradeBook.DataAccess.Entities
 
         public int SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
+
+        public virtual List<Grade> Grades { get; set; }
 
         public DateTime Date { get; set; }
 #nullable enable
