@@ -8,5 +8,6 @@
         public string Comment { get; set; }
         public string Date { get; set; }
         public string SubjectName { get; set; }
+        public string TeacherName { get; set; }
     }
 }

@@ -59,6 +59,7 @@ namespace GradeBook.BusinessLogic.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, _userManager.GetRolesAsync(user).Result.FirstOrDefault())
             };
 

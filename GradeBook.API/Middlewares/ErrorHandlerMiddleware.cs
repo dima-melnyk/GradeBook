@@ -32,6 +32,9 @@ namespace GradeBook.API.Middlewares
 
                 switch (exception)
                 {
+                    case UnauthorizedAccessException:
+                        response.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        break;
                     case ArgumentException:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;

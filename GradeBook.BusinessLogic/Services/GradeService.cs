@@ -7,8 +7,8 @@ using GradeBook.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -29,9 +29,14 @@ namespace GradeBook.BusinessLogic.Services
 
         public Task DeleteGrade(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<GradeToView> GetGrade(int id)
+        public async Task<GradeToView> GetGrade(int id, IEnumerable<Claim> claims)
         {
             var model = await _repository.GetByIdAsync(id);
+            var role = claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+
+            if (int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) == model.Pupil.UserId 
+                || role == "Teacher" || role == "Admin")
+                throw new UnauthorizedAccessException("User doesn\'t have access to this information");
             return _mapper.Map<GradeToView>(model);
         }
 
