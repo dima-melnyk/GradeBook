@@ -2,6 +2,8 @@
 using GradeBook.Models.Read;
 using GradeBook.Models.Write;
 using GradeBook.DataAccess.Entities;
+using GradeBook.Models.Auth;
+using Microsoft.AspNetCore.Identity;
 
 namespace GradeBook.API.Mapper
 {
@@ -36,6 +38,8 @@ namespace GradeBook.API.Mapper
                 .ForMember(g => g.PupilName, opt => opt.MapFrom(g => g.Pupil.FirstName + " " + g.Pupil.LastName))
                 .ForMember(g => g.SubjectName, opt => opt.MapFrom(g => g.Lesson.Subject.Name))
                 .ForMember(g => g.Date, opt => opt.MapFrom(g => g.Lesson.Date.Date.ToString("dd/MM/yyyy")));
+
+            CreateMap<RegisterUser, IdentityUser<int>>();
         }
     }
 }

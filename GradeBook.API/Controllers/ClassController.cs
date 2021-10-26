@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using GradeBook.DataAccess.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GradeBook.API.Controllers
 {

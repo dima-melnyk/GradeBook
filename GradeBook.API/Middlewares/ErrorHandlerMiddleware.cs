@@ -32,7 +32,7 @@ namespace GradeBook.API.Middlewares
 
                 switch (exception)
                 {
-                    case ApplicationException:
+                    case ArgumentException:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     case KeyNotFoundException:

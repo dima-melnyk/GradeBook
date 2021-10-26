@@ -4,6 +4,7 @@ using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GradeBook.API.Controllers
 {
