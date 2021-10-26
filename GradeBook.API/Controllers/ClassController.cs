@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GradeBook.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassController : ControllerBase

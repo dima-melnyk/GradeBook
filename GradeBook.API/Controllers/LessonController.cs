@@ -7,9 +7,11 @@ using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GradeBook.API.Controllers
 {
+    [Authorize(Roles = "Teacher, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class LessonController : ControllerBase
