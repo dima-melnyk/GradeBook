@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -13,14 +16,22 @@ namespace GradeBook.BusinessLogic.Services
     {
         private readonly IEntityRepository<Pupil> _repository;
         private readonly IMapper _mapper;
+        private readonly UserManager<IdentityUser<int>> _userManager;
 
-        public PupilService(IEntityRepository<Pupil> repository, IMapper mapper)
+        public PupilService(IEntityRepository<Pupil> repository, IMapper mapper, UserManager<IdentityUser<int>> userManager)
         {
             _repository = repository;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
-        public Task CreatePupil(Pupil newPupil) => _repository.AddAsync(newPupil);
+        public async Task CreatePupil(Pupil newPupil, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            newPupil.UserId = user.Id;
+            await _userManager.AddToRoleAsync(user, "Pupil");
+            await _repository.AddAsync(newPupil);
+        }
 
         public Task UpdatePupil(Pupil updatePupil) => _repository.UpdateAsync(updatePupil);
 

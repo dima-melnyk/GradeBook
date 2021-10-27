@@ -35,7 +35,7 @@ namespace GradeBook.API.Controllers
         public async Task CreatePupil([FromBody] CreatePupil createPupil)
         {
             var model = _mapper.Map<Pupil>(createPupil);
-            await _pupilService.CreatePupil(model);
+            await _pupilService.CreatePupil(model, createPupil.UserEmail);
         }
 
         [Authorize(Roles = "Admin")]

@@ -30,7 +30,7 @@ namespace GradeBook.API.Controllers
         public async Task CreateTeacher([FromBody] CreateTeacher createTeacher)
         {
             var model = _mapper.Map<Teacher>(createTeacher);
-            await _teacherService.CreateTeacher(model);
+            await _teacherService.CreateTeacher(model, createTeacher.UserEmail);
         }
 
         [HttpDelete("delete/{id}")]

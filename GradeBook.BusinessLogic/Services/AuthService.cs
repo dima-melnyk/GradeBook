@@ -60,8 +60,12 @@ namespace GradeBook.BusinessLogic.Services
             {
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.UserName),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, _userManager.GetRolesAsync(user).Result.FirstOrDefault())
             };
+
+            foreach (var claim in await _userManager.GetRolesAsync(user))
+            {
+                claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, claim));
+            }
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 

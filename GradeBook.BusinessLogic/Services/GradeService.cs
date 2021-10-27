@@ -34,8 +34,8 @@ namespace GradeBook.BusinessLogic.Services
             var model = await _repository.GetByIdAsync(id);
             var role = claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
 
-            if (int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) == model.Pupil.UserId 
-                || role == "Teacher" || role == "Admin")
+            if (!(int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) == model.Pupil.UserId 
+                || role == "Teacher" || role == "Admin"))
                 throw new UnauthorizedAccessException("User doesn\'t have access to this information");
             return _mapper.Map<GradeToView>(model);
         }
