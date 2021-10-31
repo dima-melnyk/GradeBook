@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GradeBook.DataAccess.Entities.Base.Interface;
+using Microsoft.AspNetCore.Identity;
 using System;
 
 namespace GradeBook.DataAccess.Entities.Base
 {
-    public class UserBase : EntityBase
+    public class UserBase : IdentityUser<int>, IEntityBase
     {
-        public int UserId { get; set; }
-        public virtual IdentityUser<int> User { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }

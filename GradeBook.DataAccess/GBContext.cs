@@ -1,4 +1,5 @@
 ﻿using GradeBook.DataAccess.Entities;
+using GradeBook.DataAccess.Entities.Base;
 using GradeBook.DataAccess.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.DataAccess
 {
-    public class GBContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
+    public class GBContext : IdentityDbContext<UserBase, IdentityRole<int>, int>
     {
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Subject> Subjects { get; set; }
@@ -29,6 +30,11 @@ namespace GradeBook.DataAccess
             builder.Entity<Grade>()
                 .HasOne(g => g.Lesson)
                 .WithMany(l => l.Grades)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Teacher>()
+                .HasMany(t => t.Lessons)
+                .WithOne(l => l.Teacher)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder.Seed();

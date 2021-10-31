@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GradeBook.BusinessLogic.Interfaces;
+using GradeBook.DataAccess.Entities.Base;
 using GradeBook.Models.Auth;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -17,12 +18,12 @@ namespace GradeBook.BusinessLogic.Services
 {
     public class AuthService : IAuthService
     {
-        private readonly UserManager<IdentityUser<int>> _userManager;
+        private readonly UserManager<UserBase> _userManager;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-        public AuthService(UserManager<IdentityUser<int>> userManager, 
+        public AuthService(UserManager<UserBase> userManager, 
             RoleManager<IdentityRole<int>> roleManager,
             IConfiguration configuration,
             IMapper mapper)
@@ -35,7 +36,7 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task Register(RegisterUser user)
         {
-            var newUser = _mapper.Map<IdentityUser<int>>(user);
+            var newUser = _mapper.Map<UserBase>(user);
             newUser.PhoneNumberConfirmed = true;
             newUser.EmailConfirmed = true;
 

@@ -1,16 +1,16 @@
+using GradeBook.API.Extensions;
+using GradeBook.DataAccess;
+using GradeBook.DataAccess.Entities.Base;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using GradeBook.DataAccess;
-using GradeBook.API.Extensions;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using GradeBook.DataAccess.Utilities;
 
 namespace GradeBook.API
 {
@@ -33,7 +33,7 @@ namespace GradeBook.API
             services.ConfigureCustomServices();
             services.ConfigureMapper();
 
-            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+            services.AddIdentity<UserBase, IdentityRole<int>>()
                 .AddEntityFrameworkStores<GBContext>()
                 .AddDefaultTokenProviders();
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using GradeBook.DataAccess.Entities.Base;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace GradeBook.DataAccess.Utilities
                 new IdentityRole<int>("Teacher") { Id = 4, NormalizedName = "TEACHER" });
 
             var hasher = new PasswordHasher<IdentityUser<int>>();
-            builder.Entity<IdentityUser<int>>().HasData(
-                new IdentityUser<int>
+            builder.Entity<UserBase>().HasData(
+                new UserBase
                 {
                     Id = 1,
                     UserName = "Admin",
