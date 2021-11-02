@@ -17,21 +17,13 @@ namespace GradeBook.BusinessLogic.Services
     {
         private readonly IEntityRepository<Pupil> _repository;
         private readonly IMapper _mapper;
-        private readonly UserManager<UserBase> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PupilService(IEntityRepository<Pupil> repository, IMapper mapper, UserManager<UserBase> userManager)
+        public PupilService(IEntityRepository<Pupil> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _repository = repository;
             _mapper = mapper;
             _userManager = userManager;
-        }
-
-        public async Task CreatePupil(Pupil newPupil, string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            newPupil.Id = user.Id;
-            await _userManager.AddToRoleAsync(user, "Pupil");
-            await _repository.AddAsync(newPupil);
         }
 
         public Task UpdatePupil(Pupil updatePupil) => _repository.UpdateAsync(updatePupil);

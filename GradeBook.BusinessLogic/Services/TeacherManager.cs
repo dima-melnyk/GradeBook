@@ -14,21 +14,13 @@ namespace GradeBook.BusinessLogic.Services
     {
         private readonly IEntityRepository<Teacher> _repository;
         private readonly IMapper _mapper;
-        private readonly UserManager<UserBase> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TeacherManager(IEntityRepository<Teacher> repository, IMapper mapper, UserManager<UserBase> userManager)
+        public TeacherManager(IEntityRepository<Teacher> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _repository = repository;
             _mapper = mapper;
             _userManager = userManager;
-        }
-
-        public async Task CreateTeacher(Teacher newTeacher, string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            newTeacher.Id = user.Id;
-            await _userManager.AddToRoleAsync(user, "Teacher");
-            await _repository.AddAsync(newTeacher);
         }
 
         public Task DeleteTeacher(int id) => _repository.RemoveByIdAsync(id);

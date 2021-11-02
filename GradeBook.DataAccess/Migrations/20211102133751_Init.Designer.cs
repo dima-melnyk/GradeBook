@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GradeBook.DataAccess.Migrations
 {
     [DbContext(typeof(GBContext))]
-    [Migration("20211031163815_Init")]
+    [Migration("20211102133751_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace GradeBook.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Base.UserBase", b =>
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.ApplicationUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,10 +36,6 @@ namespace GradeBook.DataAccess.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -100,21 +96,19 @@ namespace GradeBook.DataAccess.Migrations
 
                     b.ToTable("AspNetUsers");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("UserBase");
-
                     b.HasData(
                         new
                         {
                             Id = 1,
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "2d408cce-c984-44a1-a1ad-614c265aa800",
+                            ConcurrencyStamp = "8c3f86e1-224c-4710-9d7c-dd9ecd67f602",
                             Email = "dmytro.melnyk.v@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "DMYTRO.MELNYK.V@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJR3NxFA4rTmwyGQPEkU7iOMuIMoqq7+hCw4cvN+eFDZvQ89FBM+LM04fI/+gNwaZg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDXHZXD4pA1PSCUTNFYIcIZS3UEULitdZ5j+L+sK5Rt0NE7PrnI95DMQh7TzRHv5eg==",
                             PhoneNumberConfirmed = true,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -204,6 +198,29 @@ namespace GradeBook.DataAccess.Migrations
                     b.ToTable("Lessons");
                 });
 
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Pupils");
+                });
+
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Subject", b =>
                 {
                     b.Property<int>("Id")
@@ -217,6 +234,24 @@ namespace GradeBook.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.Teacher", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -251,28 +286,28 @@ namespace GradeBook.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "ddaec0eb-8a1a-4f68-9e30-37767dfeaa27",
+                            ConcurrencyStamp = "034427cc-2660-423f-8b4a-5a54bc522395",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "a85d4eb8-6f5e-4ff2-b673-031f1782b20f",
+                            ConcurrencyStamp = "15a856fa-3ad6-4f44-ba95-3de41f4cc85b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "5eb4b187-fa96-4766-b5bc-8c9f6b148c59",
+                            ConcurrencyStamp = "d13d739a-8cbd-444b-97bb-f4f9909cd6f9",
                             Name = "Pupil",
                             NormalizedName = "PUPIL"
                         },
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "60d17ff7-0e72-4fe4-a942-f9ec9d2aa30a",
+                            ConcurrencyStamp = "02031fb6-725a-458c-8056-ccb511340396",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         });
@@ -386,25 +421,6 @@ namespace GradeBook.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
-                {
-                    b.HasBaseType("GradeBook.DataAccess.Entities.Base.UserBase");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("ClassId");
-
-                    b.HasDiscriminator().HasValue("Pupil");
-                });
-
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Teacher", b =>
-                {
-                    b.HasBaseType("GradeBook.DataAccess.Entities.Base.UserBase");
-
-                    b.HasDiscriminator().HasValue("Teacher");
-                });
-
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Grade", b =>
                 {
                     b.HasOne("GradeBook.DataAccess.Entities.Lesson", "Lesson")
@@ -451,6 +467,36 @@ namespace GradeBook.DataAccess.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
+                {
+                    b.HasOne("GradeBook.DataAccess.Entities.Class", "Class")
+                        .WithMany("Pupils")
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "ApplicationUser")
+                        .WithOne()
+                        .HasForeignKey("GradeBook.DataAccess.Entities.Pupil", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.Teacher", b =>
+                {
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "ApplicationUser")
+                        .WithOne()
+                        .HasForeignKey("GradeBook.DataAccess.Entities.Teacher", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<int>", null)
@@ -462,7 +508,7 @@ namespace GradeBook.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
                 {
-                    b.HasOne("GradeBook.DataAccess.Entities.Base.UserBase", null)
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -471,7 +517,7 @@ namespace GradeBook.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<int>", b =>
                 {
-                    b.HasOne("GradeBook.DataAccess.Entities.Base.UserBase", null)
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -486,7 +532,7 @@ namespace GradeBook.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GradeBook.DataAccess.Entities.Base.UserBase", null)
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -495,22 +541,11 @@ namespace GradeBook.DataAccess.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<int>", b =>
                 {
-                    b.HasOne("GradeBook.DataAccess.Entities.Base.UserBase", null)
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
-                {
-                    b.HasOne("GradeBook.DataAccess.Entities.Class", "Class")
-                        .WithMany("Pupils")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
                 });
 
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Class", b =>

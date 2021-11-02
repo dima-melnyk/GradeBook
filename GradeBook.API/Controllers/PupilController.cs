@@ -31,14 +31,6 @@ namespace GradeBook.API.Controllers
         public Task<PupilToView> GetPupil([FromRoute] int id) => _pupilService.GetPupil(id);
 
         [Authorize(Roles = "Admin")]
-        [HttpPost]
-        public async Task CreatePupil([FromBody] CreatePupil createPupil)
-        {
-            var model = _mapper.Map<Pupil>(createPupil);
-            await _pupilService.CreatePupil(model, createPupil.UserEmail);
-        }
-
-        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task UpdatePupil([FromRoute] int id, [FromBody] UpdatePupil updatePupil)
         {

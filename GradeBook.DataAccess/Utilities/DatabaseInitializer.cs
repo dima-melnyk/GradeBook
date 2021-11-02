@@ -1,9 +1,6 @@
-﻿using GradeBook.DataAccess.Entities.Base;
+﻿using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GradeBook.DataAccess.Utilities
 {
@@ -12,14 +9,15 @@ namespace GradeBook.DataAccess.Utilities
         public static void Seed(this ModelBuilder builder)
         {
             builder.Entity<IdentityRole<int>>().HasData(
-                new IdentityRole<int>("User") { Id = 1, NormalizedName = "USER" },
-                new IdentityRole<int>("Admin") { Id = 2, NormalizedName = "ADMIN" },
-                new IdentityRole<int>("Pupil") { Id = 3, NormalizedName = "PUPIL" },
-                new IdentityRole<int>("Teacher") { Id = 4, NormalizedName = "TEACHER" });
+                new IdentityRole<int>(Role.User.ToString()) { Id = 1, NormalizedName = Role.User.ToString().ToUpper() },
+                new IdentityRole<int>(Role.Admin.ToString()) { Id = 2, NormalizedName = Role.Admin.ToString().ToUpper() },
+                new IdentityRole<int>(Role.Pupil.ToString()) { Id = 3, NormalizedName = Role.Pupil.ToString().ToUpper() },
+                new IdentityRole<int>(Role.Teacher.ToString()) { Id = 4, NormalizedName = Role.Teacher.ToString().ToUpper() }
+            );
 
-            var hasher = new PasswordHasher<IdentityUser<int>>();
-            builder.Entity<UserBase>().HasData(
-                new UserBase
+            var hasher = new PasswordHasher<ApplicationUser>();
+            builder.Entity<ApplicationUser>().HasData(
+                new ApplicationUser
                 {
                     Id = 1,
                     UserName = "Admin",

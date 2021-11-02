@@ -9,18 +9,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.BusinessLogic.Services
 {
     public class GradeService : IGradeService
     {
         private readonly IEntityRepository<Grade> _repository;
+        private readonly IEntityRepository<Pupil> _pupilRepository;
         private readonly IMapper _mapper;
 
-        public GradeService(IEntityRepository<Grade> repository, IMapper mapper)
+        public GradeService(IEntityRepository<Grade> repository, IMapper mapper, IEntityRepository<Pupil> pupilRepository)
         {
             _repository = repository;
             _mapper = mapper;
+            _pupilRepository = pupilRepository;
         }
 
         public Task CreateGrade(Grade newGrade) => _repository.AddAsync(newGrade);
@@ -32,11 +35,13 @@ namespace GradeBook.BusinessLogic.Services
         public async Task<GradeToView> GetGrade(int id, IEnumerable<Claim> claims)
         {
             var model = await _repository.GetByIdAsync(id);
-            var role = claims.FirstOrDefault(c => c.Type == ClaimsIdentity.DefaultRoleClaimType).Value;
+            var roles = claims.Where(c => c.Type == ClaimsIdentity.DefaultRoleClaimType)
+                .Select(c => c.Value);
 
-            if (!(int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value) == model.Pupil.Id 
-                || role == "Teacher" || role == "Admin"))
-                throw new UnauthorizedAccessException("User doesn\'t have access to this information");
+            var pupilId = await GetPupilId(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+
+            if (!(pupilId == model.Pupil.Id || IsUserInCorrectRole(roles)))
+                throw new MethodAccessException("User doesn\'t have access to this information");
             return _mapper.Map<GradeToView>(model);
         }
 
@@ -47,5 +52,16 @@ namespace GradeBook.BusinessLogic.Services
                 .Where(g => g.Lesson.Date.Equals(query.Date) || query.Date == null)
                 .Select(_mapper.Map<GradeToView>)
                 .ToList();
+
+        private bool IsUserInCorrectRole(IEnumerable<string> roles)
+        {
+            IEnumerable<string> correctRoles = new List<string> { "Teacher", "Admin" };
+            return correctRoles.Intersect(roles).Any();
+        }
+
+        private Task<int> GetPupilId(string userId) => _pupilRepository.GetAll()
+                .Where(p => p.UserId == int.Parse(userId))
+                .Select(p => p.Id)
+                .FirstOrDefaultAsync();
     }
 }

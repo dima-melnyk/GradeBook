@@ -1,6 +1,6 @@
 using GradeBook.API.Extensions;
 using GradeBook.DataAccess;
-using GradeBook.DataAccess.Entities.Base;
+using GradeBook.DataAccess.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,7 +33,7 @@ namespace GradeBook.API
             services.ConfigureCustomServices();
             services.ConfigureMapper();
 
-            services.AddIdentity<UserBase, IdentityRole<int>>()
+            services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                 .AddEntityFrameworkStores<GBContext>()
                 .AddDefaultTokenProviders();
 

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.DataAccess
 {
-    public class GBContext : IdentityDbContext<UserBase, IdentityRole<int>, int>
+    public class GBContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Subject> Subjects { get; set; }
@@ -21,6 +21,7 @@ namespace GradeBook.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<Grade>()
                 .Property(g => g.IsAbsent)
                 .HasDefaultValue(false);
@@ -31,11 +32,19 @@ namespace GradeBook.DataAccess
                 .HasOne(g => g.Lesson)
                 .WithMany(l => l.Grades)
                 .OnDelete(DeleteBehavior.NoAction);
-
             builder.Entity<Teacher>()
                 .HasMany(t => t.Lessons)
                 .WithOne(l => l.Teacher)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Pupil>()
+                .HasOne(p => p.ApplicationUser)
+                .WithOne()
+                .HasForeignKey<Pupil>(p => p.UserId);
+            builder.Entity<Teacher>()
+                .HasOne(p => p.ApplicationUser)
+                .WithOne()
+                .HasForeignKey<Teacher>(p => p.UserId);
 
             builder.Seed();
         }

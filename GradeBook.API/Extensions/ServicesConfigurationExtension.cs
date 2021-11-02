@@ -18,6 +18,7 @@ namespace GradeBook.API.Extensions
             services.AddTransient<ILessonService, LessonService>();
             services.AddTransient<IGradeService, GradeService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IAdminService, AdminService>();
         }
     }
 }

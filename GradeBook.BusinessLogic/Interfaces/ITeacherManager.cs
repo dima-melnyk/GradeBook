@@ -6,7 +6,6 @@ namespace GradeBook.BusinessLogic.Interfaces
 {
     public interface ITeacherManager
     {
-        Task CreateTeacher(Teacher newTeacher, string email);
         Task DeleteTeacher(int id);
         Task<TeacherToView> GetTeacher(int id);
     }

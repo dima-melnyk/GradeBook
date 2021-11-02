@@ -26,13 +26,6 @@ namespace GradeBook.API.Controllers
         [HttpGet("{id}")]
         public Task<TeacherToView> GetTeacher([FromRoute] int id) => _teacherService.GetTeacher(id);
 
-        [HttpPost]
-        public async Task CreateTeacher([FromBody] CreateTeacher createTeacher)
-        {
-            var model = _mapper.Map<Teacher>(createTeacher);
-            await _teacherService.CreateTeacher(model, createTeacher.UserEmail);
-        }
-
         [HttpDelete("delete/{id}")]
         public Task DeleteTeacher(int id) => _teacherService.DeleteTeacher(id);
     }
