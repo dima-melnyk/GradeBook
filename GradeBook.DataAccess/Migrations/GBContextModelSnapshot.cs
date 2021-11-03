@@ -100,13 +100,13 @@ namespace GradeBook.DataAccess.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "8c3f86e1-224c-4710-9d7c-dd9ecd67f602",
+                            ConcurrencyStamp = "4d2386a1-7caa-4b06-a881-1ac09e89db67",
                             Email = "dmytro.melnyk.v@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "DMYTRO.MELNYK.V@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDXHZXD4pA1PSCUTNFYIcIZS3UEULitdZ5j+L+sK5Rt0NE7PrnI95DMQh7TzRHv5eg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN00t3FHRk245E4bfHrJ6MDJN8ckBtI6gkcai+2bEgg0X8TpHyr10HKKY+KgEcjDBQ==",
                             PhoneNumberConfirmed = true,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -199,22 +199,14 @@ namespace GradeBook.DataAccess.Migrations
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Pupils");
                 });
@@ -237,17 +229,9 @@ namespace GradeBook.DataAccess.Migrations
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Teacher", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
 
                     b.ToTable("Teachers");
                 });
@@ -284,28 +268,28 @@ namespace GradeBook.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "034427cc-2660-423f-8b4a-5a54bc522395",
+                            ConcurrencyStamp = "b10d4c4f-ced3-4a1e-b8b5-d8ec739caaae",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "15a856fa-3ad6-4f44-ba95-3de41f4cc85b",
+                            ConcurrencyStamp = "03c69ee4-aeeb-4b0e-947f-a10d212bea3b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "d13d739a-8cbd-444b-97bb-f4f9909cd6f9",
+                            ConcurrencyStamp = "748fe55e-7b4f-400d-a15b-46d716c75118",
                             Name = "Pupil",
                             NormalizedName = "PUPIL"
                         },
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "02031fb6-725a-458c-8056-ccb511340396",
+                            ConcurrencyStamp = "96a0468e-7973-49f9-96e1-1ec2aa7ec844",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         });
@@ -475,7 +459,7 @@ namespace GradeBook.DataAccess.Migrations
 
                     b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "ApplicationUser")
                         .WithOne()
-                        .HasForeignKey("GradeBook.DataAccess.Entities.Pupil", "UserId")
+                        .HasForeignKey("GradeBook.DataAccess.Entities.Pupil", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -488,7 +472,7 @@ namespace GradeBook.DataAccess.Migrations
                 {
                     b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "ApplicationUser")
                         .WithOne()
-                        .HasForeignKey("GradeBook.DataAccess.Entities.Teacher", "UserId")
+                        .HasForeignKey("GradeBook.DataAccess.Entities.Teacher", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

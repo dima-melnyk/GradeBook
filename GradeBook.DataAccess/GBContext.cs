@@ -40,11 +40,11 @@ namespace GradeBook.DataAccess
             builder.Entity<Pupil>()
                 .HasOne(p => p.ApplicationUser)
                 .WithOne()
-                .HasForeignKey<Pupil>(p => p.UserId);
+                .HasForeignKey<Pupil>(p => p.Id);
             builder.Entity<Teacher>()
                 .HasOne(p => p.ApplicationUser)
                 .WithOne()
-                .HasForeignKey<Teacher>(p => p.UserId);
+                .HasForeignKey<Teacher>(p => p.Id);
 
             builder.Seed();
         }

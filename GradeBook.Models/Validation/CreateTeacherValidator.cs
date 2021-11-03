@@ -7,7 +7,7 @@ namespace GradeBook.Models.Validation
     {
         public CreateTeacherValidator()
         {
-            RuleFor(c => c.UserId).NotEmpty();
+            RuleFor(c => c.Id).NotEmpty();
         }
     }
 }

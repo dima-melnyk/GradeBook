@@ -27,7 +27,7 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task Create<TEntity>(TEntity model) where TEntity: UserBase
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == model.UserId);
+            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == model.Id);
             if (user == null)
                 throw new KeyNotFoundException("User cannot be found");
             await _context.Set<TEntity>().AddAsync(model);

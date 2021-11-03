@@ -4,6 +4,6 @@ namespace GradeBook.Models.Write
 {
     public class CreateTeacher
     {
-        public int UserId { get; set; }
+        public int Id { get; set; }
     }
 }

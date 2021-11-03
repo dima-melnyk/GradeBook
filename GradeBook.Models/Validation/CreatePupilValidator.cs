@@ -8,7 +8,7 @@ namespace GradeBook.Models.Validation
         public CreatePupilValidator()
         {
             RuleFor(c => c.ClassId).NotEmpty();
-            RuleFor(c => c.UserId).NotEmpty();
+            RuleFor(c => c.Id).NotEmpty();
         }
     }
 }

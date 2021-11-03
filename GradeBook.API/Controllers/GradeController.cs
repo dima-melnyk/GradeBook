@@ -28,7 +28,12 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<GradeModel> GetGrades([FromQuery] GradeQuery query) => _gradeService.GetGrades(query);
+        public IEnumerable<GradeModel> GetGrades([FromQuery] GradeQuery query)
+        {
+            if (User.IsInRole(Role.Pupil.ToString()))
+                query.PupilId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            return _gradeService.GetGrades(query);
+        }
 
         [HttpGet("{id}")]
         public Task<GradeModel> GetGrade([FromRoute] int id) => _gradeService.GetGrade(id, User.Claims);

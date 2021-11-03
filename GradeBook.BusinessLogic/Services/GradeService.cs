@@ -38,7 +38,7 @@ namespace GradeBook.BusinessLogic.Services
             var roles = claims.Where(c => c.Type == ClaimsIdentity.DefaultRoleClaimType)
                 .Select(c => c.Value);
 
-            var pupilId = await GetPupilId(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            var pupilId = int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             if (!(pupilId == model.Pupil.Id || IsUserInCorrectRole(roles)))
                 throw new MethodAccessException("User doesn\'t have access to this information");
@@ -58,10 +58,5 @@ namespace GradeBook.BusinessLogic.Services
             IEnumerable<string> correctRoles = new List<string> { "Teacher", "Admin" };
             return correctRoles.Intersect(roles).Any();
         }
-
-        private Task<int> GetPupilId(string userId) => _pupilRepository.GetAll()
-                .Where(p => p.UserId == int.Parse(userId))
-                .Select(p => p.Id)
-                .FirstOrDefaultAsync();
     }
 }
