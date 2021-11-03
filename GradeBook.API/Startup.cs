@@ -1,6 +1,8 @@
+using FluentValidation.AspNetCore;
 using GradeBook.API.Extensions;
 using GradeBook.DataAccess;
 using GradeBook.DataAccess.Entities;
+using GradeBook.Models.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +28,13 @@ namespace GradeBook.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(fv => 
+            {
+                fv.DisableDataAnnotationsValidation = true;
+                fv.RegisterValidatorsFromAssemblyContaining<RegisterValidator>();
+                fv.LocalizationEnabled = false;
+            });
+
             services.ConfigureSwagger();
             services.AddDbContext<GBContext>(options => options.UseLazyLoadingProxies()
                 .UseSqlServer(Configuration.GetConnectionString("GBDatabase")));
