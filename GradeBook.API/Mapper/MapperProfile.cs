@@ -33,19 +33,19 @@ namespace GradeBook.API.Mapper
 
             CreateMap<CreateLesson, Lesson>();
             CreateMap<Lesson, LessonToView>()
-                .ForMember(l => l.TeacherName, opt => 
+                .ForMember(l => l.TeacherName, opt =>
                     opt.MapFrom(l => l.Teacher.ApplicationUser.FirstName + " " + l.Teacher.ApplicationUser.LastName))
                 .ForMember(l => l.Date, opt => opt.MapFrom(l => l.Date.ToString("dd/MM/yyyy")));
 
             CreateMap<CreateGrade, Grade>();
             CreateMap<UpdateGrade, Grade>();
             CreateMap<Grade, GradeToView>()
-                .ForMember(g => g.PupilName, opt => 
+                .ForMember(g => g.PupilName, opt =>
                     opt.MapFrom(g => g.Pupil.ApplicationUser.FirstName + " " + g.Pupil.ApplicationUser.LastName))
                 .ForMember(g => g.SubjectName, opt => opt.MapFrom(g => g.Lesson.Subject.Name))
                 .ForMember(g => g.Date, opt => opt.MapFrom(g => g.Lesson.Date.ToString("dd/MM/yyyy")))
-                .ForMember(g => g.TeacherName, opt => 
-                    opt.MapFrom(g => g.Lesson.Teacher.ApplicationUser.FirstName + g.Lesson.Teacher.ApplicationUser.LastName));
+                .ForMember(g => g.TeacherName, opt =>
+                    opt.MapFrom(g => g.Lesson.Teacher.ApplicationUser.FirstName + " " + g.Lesson.Teacher.ApplicationUser.LastName));
 
             CreateMap<RegisterUser, ApplicationUser>();
             CreateMap<ApplicationUser, UserModel>()
