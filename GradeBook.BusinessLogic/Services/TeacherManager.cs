@@ -4,6 +4,9 @@ using GradeBook.Models.Read;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Repository.Interfaces;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using GradeBook.DataAccess.Entities.Base;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -11,21 +14,21 @@ namespace GradeBook.BusinessLogic.Services
     {
         private readonly IEntityRepository<Teacher> _repository;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public TeacherManager(IEntityRepository<Teacher> repository, IMapper mapper)
+        public TeacherManager(IEntityRepository<Teacher> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _repository = repository;
             _mapper = mapper;
+            _userManager = userManager;
         }
-
-        public Task CreateTeacher(Teacher newTeacher) => _repository.AddAsync(newTeacher);
 
         public Task DeleteTeacher(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<TeacherToView> GetTeacher(int id)
+        public async Task<TeacherModel> GetTeacher(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<TeacherToView>(model);
+            return _mapper.Map<TeacherModel>(model);
         }
 
     }

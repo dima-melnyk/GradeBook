@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GradeBook.DataAccess;
+using GradeBook.DataAccess.Entities.Base.Interface;
 using GradeBook.Repository.Interfaces;
 
 namespace BookStore.Repository.Repositories
 {
 
-    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class
+    public class RepositoryBase<TEntity> : IRepository<TEntity> where TEntity : class, IEntityBase
     {
         protected readonly GBContext DbContext;
 

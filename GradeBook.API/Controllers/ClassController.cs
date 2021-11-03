@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using GradeBook.DataAccess.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace GradeBook.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassController : ControllerBase
@@ -22,7 +25,10 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<ClassToView> GetClass([FromRoute] int id) => _classService.GetClass(id);
+        public Task<ClassModel> GetClass([FromRoute] int id) => _classService.GetClass(id);
+
+        [HttpGet("classes")]
+        public IEnumerable<ClassModel> GetClasses() => _classService.GetClasses();
 
         [HttpPost]
         public async Task CreateClass([FromBody] CreateClass createClass)

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using GradeBook.DataAccess.Entities.Base;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -13,28 +17,28 @@ namespace GradeBook.BusinessLogic.Services
     {
         private readonly IEntityRepository<Pupil> _repository;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PupilService(IEntityRepository<Pupil> repository, IMapper mapper)
+        public PupilService(IEntityRepository<Pupil> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _repository = repository;
             _mapper = mapper;
+            _userManager = userManager;
         }
-
-        public Task CreatePupil(Pupil newPupil) => _repository.AddAsync(newPupil);
 
         public Task UpdatePupil(Pupil updatePupil) => _repository.UpdateAsync(updatePupil);
 
         public Task DeletePupil(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<PupilToView> GetPupil(int id)
+        public async Task<PupilModel> GetPupil(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<PupilToView>(model);
+            return _mapper.Map<PupilModel>(model);
         }
 
-        public IEnumerable<PupilToView> GetPupilsByClass(int classId) => _repository.GetAll()
+        public IEnumerable<PupilModel> GetPupilsByClass(int classId) => _repository.GetAll()
                 .Where(p => p.ClassId == classId)
-                .Select(_mapper.Map<PupilToView>)
+                .Select(_mapper.Map<PupilModel>)
                 .ToList();
     }
 }

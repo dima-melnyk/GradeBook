@@ -3,6 +3,7 @@ using GradeBook.BusinessLogic.Queries;
 using GradeBook.DataAccess.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace GradeBook.BusinessLogic.Interfaces
 {
@@ -11,7 +12,7 @@ namespace GradeBook.BusinessLogic.Interfaces
         Task CreateGrade(Grade newGrade);
         Task UpdateGrade(Grade updateGrade);
         Task DeleteGrade(int id);
-        Task<GradeToView> GetGrade(int id);
-        IEnumerable<GradeToView> GetGrades(GradeQuery query);
+        Task<GradeModel> GetGrade(int id, IEnumerable<Claim> claims);
+        IEnumerable<GradeModel> GetGrades(GradeQuery query);
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace GradeBook.Models.Read
 {
-    public class ClassToView
+    public class SubjectModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
-        public int PupilQuantity { get; set; }
     }
 }

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using GradeBook.DataAccess.Entities.Base.Interface;
+using System.ComponentModel.DataAnnotations;
 
 namespace GradeBook.DataAccess.Entities.Base
 {
-    public class UserBase : EntityBase
+    public class UserBase : IEntityBase
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime Birthday { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }

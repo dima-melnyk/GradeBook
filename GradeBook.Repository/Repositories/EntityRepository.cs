@@ -1,6 +1,7 @@
 ﻿using BookStore.Repository.Repositories;
 using GradeBook.DataAccess;
 using GradeBook.DataAccess.Entities.Base;
+using GradeBook.DataAccess.Entities.Base.Interface;
 using GradeBook.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GradeBook.Repository.Repositories
 {
-    public class EntityRepository<TEntity> : RepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity: EntityBase
+    public class EntityRepository<TEntity> : RepositoryBase<TEntity>, IEntityRepository<TEntity> where TEntity: class, IEntityBase
     {
         public EntityRepository(GBContext dbContext) : base(dbContext) { }
         

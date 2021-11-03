@@ -1,10 +1,10 @@
 ﻿namespace GradeBook.Models.Read
 {
-    public class PupilToView
+    public class TeacherModel
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Birthday { get; set; }
-        public string ClassName { get; set; }
     }
 }

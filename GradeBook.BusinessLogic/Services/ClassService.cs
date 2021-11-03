@@ -4,6 +4,8 @@ using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Repository.Interfaces;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -22,10 +24,12 @@ namespace GradeBook.BusinessLogic.Services
 
         public Task DeleteClass(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<ClassToView> GetClass(int id)
+        public async Task<ClassModel> GetClass(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<ClassToView>(model);
+            return _mapper.Map<ClassModel>(model);
         }
+
+        public IEnumerable<ClassModel> GetClasses() => _repository.GetAll().Select(_mapper.Map<ClassModel>);
     }
 }

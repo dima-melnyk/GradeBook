@@ -6,9 +6,11 @@ using GradeBook.Models.Read;
 using GradeBook.Models.Write;
 using AutoMapper;
 using GradeBook.DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GradeBook.API.Controllers
 {
+    [Authorize(Roles = "Teacher, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class PupilController : ControllerBase
@@ -23,18 +25,12 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PupilToView> GetPupils([FromQuery] int classId) => _pupilService.GetPupilsByClass(classId);
+        public IEnumerable<PupilModel> GetPupils([FromQuery] int classId) => _pupilService.GetPupilsByClass(classId);
 
         [HttpGet("{id}")]
-        public Task<PupilToView> GetPupil([FromRoute] int id) => _pupilService.GetPupil(id);
+        public Task<PupilModel> GetPupil([FromRoute] int id) => _pupilService.GetPupil(id);
 
-        [HttpPost]
-        public async Task CreatePupil([FromBody] CreatePupil createPupil)
-        {
-            var model = _mapper.Map<Pupil>(createPupil);
-            await _pupilService.CreatePupil(model);
-        }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public async Task UpdatePupil([FromRoute] int id, [FromBody] UpdatePupil updatePupil)
         {
@@ -43,6 +39,7 @@ namespace GradeBook.API.Controllers
             await _pupilService.UpdatePupil(updateModel);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/{id}")]
         public Task DeletePupil([FromRoute] int id) => _pupilService.DeletePupil(id);
     }

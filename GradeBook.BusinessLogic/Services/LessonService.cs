@@ -32,18 +32,18 @@ namespace GradeBook.BusinessLogic.Services
             await _repository.RemoveAsync(model);
         }
 
-        public async Task<LessonToView> GetLesson(int id)
+        public async Task<LessonModel> GetLesson(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<LessonToView>(model);
+            return _mapper.Map<LessonModel>(model);
         }
 
-        public IEnumerable<LessonToView> GetLessons(LessonQuery query) => _repository.GetAll()
+        public IEnumerable<LessonModel> GetLessons(LessonQuery query) => _repository.GetAll()
                 .Where(l => l.TeacherId == query.TeacherId || query.TeacherId == null)
                 .Where(l => l.ClassId == query.ClassId || query.ClassId == null)
                 .Where(l => l.SubjectId == query.SubjectId || query.SubjectId == null)
                 .Where(l => l.Date.Equals(query.Date) || query.Date == null)
-                .Select(l => _mapper.Map<LessonToView>(l))
+                .Select(l => _mapper.Map<LessonModel>(l))
                 .ToList();
     }
 }

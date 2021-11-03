@@ -1,6 +1,7 @@
 ﻿using GradeBook.Models.Read;
 using GradeBook.DataAccess.Entities;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace GradeBook.BusinessLogic.Interfaces
 {
@@ -8,6 +9,8 @@ namespace GradeBook.BusinessLogic.Interfaces
     {
         Task CreateClass(Class createClass);
         Task DeleteClass(int id);
-        Task<ClassToView> GetClass(int id);
+        Task<ClassModel> GetClass(int id);
+        IEnumerable<ClassModel> GetClasses();
+
     }
 }
