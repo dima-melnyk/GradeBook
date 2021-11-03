@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using GradeBook.DataAccess.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace GradeBook.API.Controllers
 {
@@ -25,6 +26,9 @@ namespace GradeBook.API.Controllers
 
         [HttpGet("{id}")]
         public Task<ClassModel> GetClass([FromRoute] int id) => _classService.GetClass(id);
+
+        [HttpGet("classes")]
+        public IEnumerable<ClassModel> GetClasses() => _classService.GetClasses();
 
         [HttpPost]
         public async Task CreateClass([FromBody] CreateClass createClass)

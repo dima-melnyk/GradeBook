@@ -2,6 +2,7 @@
 {
     public class GradeModel
     {
+        public int Id { get; set; }
         public string PupilName { get; set; }
         public int Mark { get; set; }
         public bool IsAbsent { get; set; }
