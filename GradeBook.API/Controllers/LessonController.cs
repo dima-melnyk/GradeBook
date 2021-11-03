@@ -26,10 +26,10 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<LessonToView> GetLesson([FromRoute] int id) => _lessonService.GetLesson(id);
+        public Task<LessonModel> GetLesson([FromRoute] int id) => _lessonService.GetLesson(id);
 
         [HttpGet]
-        public IEnumerable<LessonToView> GetLessons([FromQuery] LessonQuery query) => _lessonService.GetLessons(query);
+        public IEnumerable<LessonModel> GetLessons([FromQuery] LessonQuery query) => _lessonService.GetLessons(query);
 
         [HttpPost]
         public async Task CreateLesson([FromBody] CreateLesson createLesson)

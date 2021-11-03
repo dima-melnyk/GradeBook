@@ -30,15 +30,15 @@ namespace GradeBook.BusinessLogic.Services
 
         public Task DeletePupil(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<PupilToView> GetPupil(int id)
+        public async Task<PupilModel> GetPupil(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<PupilToView>(model);
+            return _mapper.Map<PupilModel>(model);
         }
 
-        public IEnumerable<PupilToView> GetPupilsByClass(int classId) => _repository.GetAll()
+        public IEnumerable<PupilModel> GetPupilsByClass(int classId) => _repository.GetAll()
                 .Where(p => p.ClassId == classId)
-                .Select(_mapper.Map<PupilToView>)
+                .Select(_mapper.Map<PupilModel>)
                 .ToList();
     }
 }

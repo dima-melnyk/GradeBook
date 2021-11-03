@@ -24,7 +24,7 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public Task<TeacherToView> GetTeacher([FromRoute] int id) => _teacherService.GetTeacher(id);
+        public Task<TeacherModel> GetTeacher([FromRoute] int id) => _teacherService.GetTeacher(id);
 
         [HttpDelete("delete/{id}")]
         public Task DeleteTeacher(int id) => _teacherService.DeleteTeacher(id);

@@ -22,10 +22,10 @@ namespace GradeBook.BusinessLogic.Services
 
         public Task DeleteClass(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<ClassToView> GetClass(int id)
+        public async Task<ClassModel> GetClass(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<ClassToView>(model);
+            return _mapper.Map<ClassModel>(model);
         }
     }
 }

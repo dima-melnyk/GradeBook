@@ -32,7 +32,7 @@ namespace GradeBook.BusinessLogic.Services
 
         public Task DeleteGrade(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<GradeToView> GetGrade(int id, IEnumerable<Claim> claims)
+        public async Task<GradeModel> GetGrade(int id, IEnumerable<Claim> claims)
         {
             var model = await _repository.GetByIdAsync(id);
             var roles = claims.Where(c => c.Type == ClaimsIdentity.DefaultRoleClaimType)
@@ -42,15 +42,15 @@ namespace GradeBook.BusinessLogic.Services
 
             if (!(pupilId == model.Pupil.Id || IsUserInCorrectRole(roles)))
                 throw new MethodAccessException("User doesn\'t have access to this information");
-            return _mapper.Map<GradeToView>(model);
+            return _mapper.Map<GradeModel>(model);
         }
 
-        public IEnumerable<GradeToView> GetGrades(GradeQuery query) => _repository.GetAll()
+        public IEnumerable<GradeModel> GetGrades(GradeQuery query) => _repository.GetAll()
                 .Where(g => g.Pupil.Id == query.PupilId || query.PupilId == null)
                 .Where(g => g.Lesson.SubjectId == query.SubjectId || query.SubjectId == null)
                 .Where(g => g.Lesson.ClassId == query.ClassId || query.ClassId == null)
                 .Where(g => g.Lesson.Date.Equals(query.Date) || query.Date == null)
-                .Select(_mapper.Map<GradeToView>)
+                .Select(_mapper.Map<GradeModel>)
                 .ToList();
 
         private bool IsUserInCorrectRole(IEnumerable<string> roles)

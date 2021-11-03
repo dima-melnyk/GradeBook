@@ -1,6 +1,6 @@
 ﻿namespace GradeBook.Models.Read
 {
-    public class GradeToView
+    public class GradeModel
     {
         public string PupilName { get; set; }
         public int Mark { get; set; }

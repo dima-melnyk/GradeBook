@@ -25,10 +25,10 @@ namespace GradeBook.BusinessLogic.Services
 
         public Task DeleteTeacher(int id) => _repository.RemoveByIdAsync(id);
 
-        public async Task<TeacherToView> GetTeacher(int id)
+        public async Task<TeacherModel> GetTeacher(int id)
         {
             var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<TeacherToView>(model);
+            return _mapper.Map<TeacherModel>(model);
         }
 
     }

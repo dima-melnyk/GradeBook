@@ -28,10 +28,10 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<GradeToView> GetGrades([FromQuery] GradeQuery query) => _gradeService.GetGrades(query);
+        public IEnumerable<GradeModel> GetGrades([FromQuery] GradeQuery query) => _gradeService.GetGrades(query);
 
         [HttpGet("{id}")]
-        public Task<GradeToView> GetGrade([FromRoute] int id) => _gradeService.GetGrade(id, User.Claims);
+        public Task<GradeModel> GetGrade([FromRoute] int id) => _gradeService.GetGrade(id, User.Claims);
 
         [Authorize(Roles = "Teacher")]
         [HttpPost]

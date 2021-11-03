@@ -25,10 +25,10 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PupilToView> GetPupils([FromQuery] int classId) => _pupilService.GetPupilsByClass(classId);
+        public IEnumerable<PupilModel> GetPupils([FromQuery] int classId) => _pupilService.GetPupilsByClass(classId);
 
         [HttpGet("{id}")]
-        public Task<PupilToView> GetPupil([FromRoute] int id) => _pupilService.GetPupil(id);
+        public Task<PupilModel> GetPupil([FromRoute] int id) => _pupilService.GetPupil(id);
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
