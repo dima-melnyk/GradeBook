@@ -15,12 +15,10 @@ namespace GradeBook.API.Controllers
     public class TeacherController : ControllerBase
     {
         private readonly ITeacherManager _teacherService;
-        private readonly IMapper _mapper;
 
-        public TeacherController(ITeacherManager teacherService, IMapper mapper)
+        public TeacherController(ITeacherManager teacherService)
         {
             _teacherService = teacherService;
-            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
