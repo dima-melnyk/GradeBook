@@ -19,7 +19,6 @@ namespace GradeBook.BusinessLogic.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 

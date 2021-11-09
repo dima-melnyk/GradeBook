@@ -16,14 +16,14 @@ namespace GradeBook.BusinessLogic.Services
     public class GradeService : IGradeService
     {
         private readonly IEntityRepository<Grade> _repository;
-        private readonly IEntityRepository<Pupil> _pupilRepository;
         private readonly IMapper _mapper;
+        private readonly IEnumerable<string> _correctRoles = new List<string> { "Teacher", "Admin" };
 
-        public GradeService(IEntityRepository<Grade> repository, IMapper mapper, IEntityRepository<Pupil> pupilRepository)
+
+        public GradeService(IEntityRepository<Grade> repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
-            _pupilRepository = pupilRepository;
         }
 
         public Task CreateGrade(Grade newGrade) => _repository.AddAsync(newGrade);
@@ -53,10 +53,6 @@ namespace GradeBook.BusinessLogic.Services
                 .ToListAsync())
                 .Select(_mapper.Map<GradeModel>);
 
-        private bool IsUserInCorrectRole(IEnumerable<string> roles)
-        {
-            IEnumerable<string> correctRoles = new List<string> { "Teacher", "Admin" };
-            return correctRoles.Intersect(roles).Any();
-        }
+        private bool IsUserInCorrectRole(IEnumerable<string> roles) => _correctRoles.Intersect(roles).Any();
     }
 }

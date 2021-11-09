@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GradeBook.API.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class GradeController : ControllerBase
@@ -27,6 +27,7 @@ namespace GradeBook.API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Pupil, Teacher, Admin")]
         [HttpGet]
         public Task<IEnumerable<GradeModel>> GetGrades([FromQuery] GradeQuery query)
         {
@@ -35,10 +36,10 @@ namespace GradeBook.API.Controllers
             return _gradeService.GetGrades(query);
         }
 
+        [Authorize(Roles = "Pupil, Teacher, Admin")]
         [HttpGet("{id}")]
         public Task<GradeModel> GetGrade([FromRoute] int id) => _gradeService.GetGrade(id, User.Claims);
 
-        [Authorize(Roles = "Teacher")]
         [HttpPost]
         public async Task CreateGrade([FromBody] CreateGrade createGrade)
         {
@@ -46,7 +47,6 @@ namespace GradeBook.API.Controllers
             await _gradeService.CreateGrade(model);
         }
 
-        [Authorize(Roles = "Teacher")]
         [HttpPut("{id}")]
         public async Task UpdateGrade([FromRoute] int id, [FromBody] UpdateGrade updateGrade)
         {
@@ -55,7 +55,6 @@ namespace GradeBook.API.Controllers
             await _gradeService.UpdateGrade(model);
         }
 
-        [Authorize(Roles = "Teacher")]
         [HttpDelete("{id}")]
         public Task DeleteGrade([FromRoute] int id) => _gradeService.DeleteGrade(id);
     }
