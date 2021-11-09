@@ -36,7 +36,7 @@ namespace GradeBook.BusinessLogic.Services
             await _userManager.AddToRoleAsync(user, model.GetType().Name);
         }
 
-        public IEnumerable<UserModel> GetUsers() => _userManager.Users.Select(GetUserModel);
+        public async Task<IEnumerable<UserModel>> GetUsers() => (await _userManager.Users.ToListAsync()).Select(GetUserModel);
 
         private UserModel GetUserModel(ApplicationUser user)
         {

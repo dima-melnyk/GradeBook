@@ -8,6 +8,6 @@ namespace GradeBook.BusinessLogic.Interfaces
     public interface ISubjectService
     {
         Task CreateSubject(Subject subject);
-        IEnumerable<SubjectModel> GetSubjects();
+        Task<IEnumerable<SubjectModel>> GetSubjects();
     }
 }

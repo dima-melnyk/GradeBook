@@ -25,7 +25,7 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet("users")]
-        public IEnumerable<UserModel> GetUsers() => _adminService.GetUsers();
+        public Task<IEnumerable<UserModel>> GetUsers() => _adminService.GetUsers();
 
         [HttpPost("pupil")]
         public Task CreatePupil([FromBody] CreatePupil createPupil) => _adminService.Create<Pupil>(_mapper.Map<Pupil>(createPupil));

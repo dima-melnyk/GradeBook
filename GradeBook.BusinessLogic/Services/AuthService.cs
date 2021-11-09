@@ -19,17 +19,14 @@ namespace GradeBook.BusinessLogic.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
         public AuthService(UserManager<ApplicationUser> userManager, 
-            RoleManager<IdentityRole<int>> roleManager,
             IConfiguration configuration,
             IMapper mapper)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _configuration = configuration;
             _mapper = mapper;
         }
@@ -73,7 +70,7 @@ namespace GradeBook.BusinessLogic.Services
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddHours(3),
+                expires: DateTime.Now.AddHours(double.Parse(_configuration["JWT:ExpirationTime"])),
                 claims: claims,
                 signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             );

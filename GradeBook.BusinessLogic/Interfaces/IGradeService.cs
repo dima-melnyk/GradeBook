@@ -13,6 +13,6 @@ namespace GradeBook.BusinessLogic.Interfaces
         Task UpdateGrade(Grade updateGrade);
         Task DeleteGrade(int id);
         Task<GradeModel> GetGrade(int id, IEnumerable<Claim> claims);
-        IEnumerable<GradeModel> GetGrades(GradeQuery query);
+        Task<IEnumerable<GradeModel>> GetGrades(GradeQuery query);
     }
 }

@@ -36,9 +36,9 @@ namespace GradeBook.BusinessLogic.Services
             return _mapper.Map<PupilModel>(model);
         }
 
-        public IEnumerable<PupilModel> GetPupilsByClass(int classId) => _repository.GetAll()
+        public async Task<IEnumerable<PupilModel>> GetPupilsByClass(int classId) => (await _repository.GetAll()
                 .Where(p => p.ClassId == classId)
-                .Select(_mapper.Map<PupilModel>)
-                .ToList();
+                .ToListAsync())
+                .Select(_mapper.Map<PupilModel>);
     }
 }

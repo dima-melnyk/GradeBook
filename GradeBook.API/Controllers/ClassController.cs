@@ -28,7 +28,7 @@ namespace GradeBook.API.Controllers
         public Task<ClassModel> GetClass([FromRoute] int id) => _classService.GetClass(id);
 
         [HttpGet("classes")]
-        public IEnumerable<ClassModel> GetClasses() => _classService.GetClasses();
+        public Task<IEnumerable<ClassModel>> GetClasses() => _classService.GetClasses();
 
         [HttpPost]
         public async Task CreateClass([FromBody] CreateClass createClass)

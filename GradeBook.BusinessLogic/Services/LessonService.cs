@@ -7,6 +7,7 @@ using GradeBook.Repository.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -38,12 +39,12 @@ namespace GradeBook.BusinessLogic.Services
             return _mapper.Map<LessonModel>(model);
         }
 
-        public IEnumerable<LessonModel> GetLessons(LessonQuery query) => _repository.GetAll()
+        public async Task<IEnumerable<LessonModel>> GetLessons(LessonQuery query) => (await _repository.GetAll()
                 .Where(l => l.TeacherId == query.TeacherId || query.TeacherId == null)
                 .Where(l => l.ClassId == query.ClassId || query.ClassId == null)
                 .Where(l => l.SubjectId == query.SubjectId || query.SubjectId == null)
                 .Where(l => l.Date.Equals(query.Date) || query.Date == null)
-                .Select(l => _mapper.Map<LessonModel>(l))
-                .ToList();
+                .ToListAsync())
+                .Select(l => _mapper.Map<LessonModel>(l));
     }
 }

@@ -25,7 +25,7 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<PupilModel> GetPupils([FromQuery] int classId) => _pupilService.GetPupilsByClass(classId);
+        public Task<IEnumerable<PupilModel>> GetPupils([FromQuery] int classId) => _pupilService.GetPupilsByClass(classId);
 
         [HttpGet("{id}")]
         public Task<PupilModel> GetPupil([FromRoute] int id) => _pupilService.GetPupil(id);

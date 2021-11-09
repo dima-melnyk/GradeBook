@@ -11,6 +11,6 @@ namespace GradeBook.BusinessLogic.Interfaces
         Task CreateLesson(Lesson newLesson);
         Task DeleteLesson(int id);
         Task<LessonModel> GetLesson(int id);
-        IEnumerable<LessonModel> GetLessons(LessonQuery query);
+        Task<IEnumerable<LessonModel>> GetLessons(LessonQuery query);
     }
 }
