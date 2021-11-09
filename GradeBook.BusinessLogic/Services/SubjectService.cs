@@ -3,6 +3,7 @@ using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Models.Read;
 using GradeBook.Repository.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace GradeBook.BusinessLogic.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<SubjectModel> GetSubjects() => _repository.GetAll().Select(_mapper.Map<SubjectModel>);
+        public async Task<IEnumerable<SubjectModel>> GetSubjects() => (await _repository.GetAll().ToListAsync()).Select(_mapper.Map<SubjectModel>);
 
         public Task CreateSubject(Subject newSubject) => _repository.AddAsync(newSubject);
     }

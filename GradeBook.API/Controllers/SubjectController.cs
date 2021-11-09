@@ -25,7 +25,7 @@ namespace GradeBook.API.Controllers
         }
 
         [HttpGet("subjects")]
-        public IEnumerable<SubjectModel> GetSubjects() => _subjectService.GetSubjects();
+        public Task<IEnumerable<SubjectModel>> GetSubjects() => _subjectService.GetSubjects();
 
         [HttpPost]
         public async Task CreateSubject([FromBody] CreateSubject createSubject)

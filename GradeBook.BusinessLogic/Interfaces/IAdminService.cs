@@ -9,6 +9,6 @@ namespace GradeBook.BusinessLogic.Interfaces
     public interface IAdminService
     {
         Task Create<TEntity>(TEntity model) where TEntity: UserBase;
-        IEnumerable<UserModel> GetUsers();
+        Task<IEnumerable<UserModel>> GetUsers();
     }
 }

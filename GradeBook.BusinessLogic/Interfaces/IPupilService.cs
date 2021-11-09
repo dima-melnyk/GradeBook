@@ -10,6 +10,6 @@ namespace GradeBook.BusinessLogic.Interfaces
         Task UpdatePupil(Pupil updatePupil);
         Task DeletePupil(int id);
         Task<PupilModel> GetPupil(int id);
-        IEnumerable<PupilModel> GetPupilsByClass(int classId);
+        Task<IEnumerable<PupilModel>> GetPupilsByClass(int classId);
     }
 }

@@ -10,7 +10,7 @@ namespace GradeBook.BusinessLogic.Interfaces
         Task CreateClass(Class createClass);
         Task DeleteClass(int id);
         Task<ClassModel> GetClass(int id);
-        IEnumerable<ClassModel> GetClasses();
+        Task<IEnumerable<ClassModel>> GetClasses();
 
     }
 }

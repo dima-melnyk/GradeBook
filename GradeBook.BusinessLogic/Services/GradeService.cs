@@ -45,13 +45,13 @@ namespace GradeBook.BusinessLogic.Services
             return _mapper.Map<GradeModel>(model);
         }
 
-        public IEnumerable<GradeModel> GetGrades(GradeQuery query) => _repository.GetAll()
+        public async Task<IEnumerable<GradeModel>> GetGrades(GradeQuery query) => (await _repository.GetAll()
                 .Where(g => g.Pupil.Id == query.PupilId || query.PupilId == null)
                 .Where(g => g.Lesson.SubjectId == query.SubjectId || query.SubjectId == null)
                 .Where(g => g.Lesson.ClassId == query.ClassId || query.ClassId == null)
                 .Where(g => g.Lesson.Date.Equals(query.Date) || query.Date == null)
-                .Select(_mapper.Map<GradeModel>)
-                .ToList();
+                .ToListAsync())
+                .Select(_mapper.Map<GradeModel>);
 
         private bool IsUserInCorrectRole(IEnumerable<string> roles)
         {

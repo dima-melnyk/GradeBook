@@ -31,7 +31,7 @@ namespace GradeBook.API.Controllers
         public Task<LessonModel> GetLesson([FromRoute] int id) => _lessonService.GetLesson(id);
 
         [HttpGet]
-        public IEnumerable<LessonModel> GetLessons([FromQuery] LessonQuery query)
+        public Task<IEnumerable<LessonModel>> GetLessons([FromQuery] LessonQuery query)
         {
             if (User.IsInRole(Role.Teacher.ToString()))
                 query.TeacherId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);

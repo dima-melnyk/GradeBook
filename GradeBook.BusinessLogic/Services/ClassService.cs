@@ -6,6 +6,7 @@ using GradeBook.Repository.Interfaces;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -30,6 +31,6 @@ namespace GradeBook.BusinessLogic.Services
             return _mapper.Map<ClassModel>(model);
         }
 
-        public IEnumerable<ClassModel> GetClasses() => _repository.GetAll().Select(_mapper.Map<ClassModel>);
+        public async Task<IEnumerable<ClassModel>> GetClasses() => (await _repository.GetAll().ToListAsync()).Select(_mapper.Map<ClassModel>);
     }
 }
