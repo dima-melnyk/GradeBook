@@ -67,10 +67,13 @@ namespace GradeBook.BusinessLogic.Services
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
+            if (!double.TryParse(_configuration["JWT:ExpirationTime"], out double minutes))
+                throw new Exception("Key cannot be generated");
+
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddHours(double.Parse(_configuration["JWT:ExpirationTime"])),
+                expires: DateTime.Now.AddMinutes(minutes),
                 claims: claims,
                 signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             );
