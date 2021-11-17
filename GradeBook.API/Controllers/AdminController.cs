@@ -16,22 +16,16 @@ namespace GradeBook.API.Controllers
     public class AdminController : ControllerBase
     {
         private readonly IAdminService _adminService;
-        private readonly IMapper _mapper;
 
-        public AdminController(IAdminService adminService, IMapper mapper)
+        public AdminController(IAdminService adminService)
         {
             _adminService = adminService;
-            _mapper = mapper;
         }
 
         [HttpGet("users")]
         public Task<IEnumerable<UserModel>> GetUsers() => _adminService.GetUsers();
 
-        [HttpPost("pupil")]
-        public Task CreatePupil([FromBody] CreatePupil createPupil) => _adminService.Create<Pupil>(_mapper.Map<Pupil>(createPupil));
-
-        [HttpPost("teacher")]
-        public Task CreateTeacher([FromBody] CreateTeacher createTeacher) => 
-            _adminService.Create<Teacher>(_mapper.Map<Teacher>(createTeacher));
+        [HttpPost]
+        public Task UpdateRole([FromBody] UpdateRole updateRole) => _adminService.UpdateRole(updateRole);
     }
 }

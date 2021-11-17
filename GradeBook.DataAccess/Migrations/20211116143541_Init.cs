@@ -184,24 +184,7 @@ namespace GradeBook.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teachers",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Teachers_AspNetUsers_Id",
-                        column: x => x.Id,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pupils",
+                name: "UserClasses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
@@ -209,15 +192,15 @@ namespace GradeBook.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pupils", x => x.Id);
+                    table.PrimaryKey("PK_UserClasses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Pupils_AspNetUsers_Id",
+                        name: "FK_UserClasses_AspNetUsers_Id",
                         column: x => x.Id,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pupils_Classes_ClassId",
+                        name: "FK_UserClasses_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
                         principalColumn: "Id",
@@ -240,6 +223,12 @@ namespace GradeBook.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Lessons", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Lessons_AspNetUsers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Lessons_Classes_ClassId",
                         column: x => x.ClassId,
                         principalTable: "Classes",
@@ -251,11 +240,6 @@ namespace GradeBook.DataAccess.Migrations
                         principalTable: "Subjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Lessons_Teachers_TeacherId",
-                        column: x => x.TeacherId,
-                        principalTable: "Teachers",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -274,16 +258,16 @@ namespace GradeBook.DataAccess.Migrations
                 {
                     table.PrimaryKey("PK_Grades", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Grades_AspNetUsers_PupilId",
+                        column: x => x.PupilId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Grades_Lessons_LessonId",
                         column: x => x.LessonId,
                         principalTable: "Lessons",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Grades_Pupils_PupilId",
-                        column: x => x.PupilId,
-                        principalTable: "Pupils",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -291,16 +275,16 @@ namespace GradeBook.DataAccess.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 1, "b10d4c4f-ced3-4a1e-b8b5-d8ec739caaae", "User", "USER" },
-                    { 2, "03c69ee4-aeeb-4b0e-947f-a10d212bea3b", "Admin", "ADMIN" },
-                    { 3, "748fe55e-7b4f-400d-a15b-46d716c75118", "Pupil", "PUPIL" },
-                    { 4, "96a0468e-7973-49f9-96e1-1ec2aa7ec844", "Teacher", "TEACHER" }
+                    { 1, "293c5a5b-89e2-441e-81e9-11cfb23ef819", "User", "USER" },
+                    { 2, "00d1a061-61a5-4fdd-ad09-03bf054f06b2", "Admin", "ADMIN" },
+                    { 3, "a31dabfe-b13d-48a5-b497-90b185c3ac59", "Pupil", "PUPIL" },
+                    { 4, "9c5a9829-beae-4f46-bda4-945d93dcfeba", "Teacher", "TEACHER" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "Birthday", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { 1, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "4d2386a1-7caa-4b06-a881-1ac09e89db67", "dmytro.melnyk.v@gmail.com", true, null, null, false, null, "DMYTRO.MELNYK.V@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEN00t3FHRk245E4bfHrJ6MDJN8ckBtI6gkcai+2bEgg0X8TpHyr10HKKY+KgEcjDBQ==", null, true, null, false, "Admin" });
+                values: new object[] { 1, 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "461b0824-fec6-4bab-accb-d21945187398", "dmytro.melnyk.v@gmail.com", true, null, null, false, null, "DMYTRO.MELNYK.V@GMAIL.COM", "ADMIN", "AQAAAAEAACcQAAAAEOfpoibKfCxLbxqQlCEy2jNynfOOaF4QdNJ+OXyla9E7lv/QzeztSoWe/zopO7D/UQ==", null, true, null, false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -372,8 +356,8 @@ namespace GradeBook.DataAccess.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pupils_ClassId",
-                table: "Pupils",
+                name: "IX_UserClasses_ClassId",
+                table: "UserClasses",
                 column: "ClassId");
         }
 
@@ -398,25 +382,22 @@ namespace GradeBook.DataAccess.Migrations
                 name: "Grades");
 
             migrationBuilder.DropTable(
+                name: "UserClasses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Lessons");
 
             migrationBuilder.DropTable(
-                name: "Pupils");
-
-            migrationBuilder.DropTable(
-                name: "Subjects");
-
-            migrationBuilder.DropTable(
-                name: "Teachers");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Classes");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Subjects");
         }
     }
 }

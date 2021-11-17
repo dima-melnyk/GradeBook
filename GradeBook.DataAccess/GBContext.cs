@@ -9,10 +9,9 @@ namespace GradeBook.DataAccess
 {
     public class GBContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
-        public DbSet<Teacher> Teachers { get; set; }
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<Class> Classes { get; set; }
-        public DbSet<Pupil> Pupils { get; set; }
+        public DbSet<UserClass> UserClasses { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Grade> Grades { get; set; }
 
@@ -32,19 +31,16 @@ namespace GradeBook.DataAccess
                 .HasOne(g => g.Lesson)
                 .WithMany(l => l.Grades)
                 .OnDelete(DeleteBehavior.NoAction);
-            builder.Entity<Teacher>()
-                .HasMany(t => t.Lessons)
-                .WithOne(l => l.Teacher)
-                .OnDelete(DeleteBehavior.NoAction);
 
-            builder.Entity<Pupil>()
-                .HasOne(p => p.ApplicationUser)
+            builder.Entity<UserClass>()
+                .HasOne(p => p.User)
                 .WithOne()
-                .HasForeignKey<Pupil>(p => p.Id);
-            builder.Entity<Teacher>()
-                .HasOne(p => p.ApplicationUser)
-                .WithOne()
-                .HasForeignKey<Teacher>(p => p.Id);
+                .HasForeignKey<UserClass>(p => p.Id);
+
+            builder.Entity<Class>()
+                .HasMany(c => c.Pupils)
+                .WithOne(u => u.Class)
+                .HasForeignKey(u => u.ClassId);
 
             builder.Seed();
         }

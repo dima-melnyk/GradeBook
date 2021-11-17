@@ -34,13 +34,9 @@ namespace GradeBook.API.Controllers
         [HttpPut("{id}")]
         public async Task UpdatePupil([FromRoute] int id, [FromBody] UpdatePupil updatePupil)
         {
-            var updateModel = _mapper.Map<Pupil>(updatePupil);
+            var updateModel = _mapper.Map<UserClass>(updatePupil);
             updateModel.Id = id;
             await _pupilService.UpdatePupil(updateModel);
         }
-
-        [Authorize(Roles = "Admin")]
-        [HttpDelete("delete/{id}")]
-        public Task DeletePupil([FromRoute] int id) => _pupilService.DeletePupil(id);
     }
 }

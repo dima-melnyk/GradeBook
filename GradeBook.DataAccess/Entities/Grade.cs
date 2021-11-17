@@ -10,7 +10,7 @@ namespace GradeBook.DataAccess.Entities
         public virtual Lesson Lesson { get; set; }
 
         public int PupilId { get; set; }
-        public virtual Pupil Pupil { get; set; }
+        public virtual ApplicationUser Pupil { get; set; }
 
         public int Mark { get; set; }
         public bool IsAbsent { get; set; }

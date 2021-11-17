@@ -1,44 +1,52 @@
 ﻿using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.Models.Read;
-using GradeBook.Repository.Interfaces;
 using GradeBook.DataAccess.Entities;
 using System.Threading.Tasks;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using GradeBook.DataAccess.Entities.Base;
+using GradeBook.DataAccess;
+using System;
 
 namespace GradeBook.BusinessLogic.Services
 {
     public class PupilService : IPupilService
     {
-        private readonly IEntityRepository<Pupil> _repository;
+        private readonly GBContext _context;
         private readonly IMapper _mapper;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PupilService(IEntityRepository<Pupil> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public PupilService(GBContext context, IMapper mapper)
         {
-            _repository = repository;
+            _context = context;
             _mapper = mapper;
-            _userManager = userManager;
         }
 
-        public Task UpdatePupil(Pupil updatePupil) => _repository.UpdateAsync(updatePupil);
-
-        public Task DeletePupil(int id) => _repository.RemoveByIdAsync(id);
+        public async Task UpdatePupil(UserClass updatePupil)
+        {
+            _context.Update(updatePupil);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task<PupilModel> GetPupil(int id)
         {
-            var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<PupilModel>(model);
+            var model = (await _context.Users.FirstOrDefaultAsync(u => u.Id == id)) ??
+                throw new KeyNotFoundException("User cannot be found");
+
+            var pupil = _mapper.Map<PupilModel>(model);
+            var className = await (from cl in _context.Classes
+                                   join uc in _context.UserClasses on cl.Id equals uc.ClassId
+                                   join au in _context.Users on uc.Id equals au.Id
+                                   where au.Id == id
+                                   select cl.Name).FirstOrDefaultAsync();
+            pupil.ClassName = className ?? throw new ArgumentException("User is not a pupil");
+
+            return pupil;
         }
 
-        public async Task<IEnumerable<PupilModel>> GetPupilsByClass(int classId) => (await _repository.GetAll()
-                .Where(p => p.ClassId == classId)
-                .ToListAsync())
-                .Select(_mapper.Map<PupilModel>);
+        public async Task<IEnumerable<PupilModel>> GetPupilsByClass(int classId) => await _context.Users
+                .Join(_context.UserClasses.Where(uc => uc.ClassId == classId),
+                    u => u.Id, uc => uc.Id, (u, uc) => _mapper.Map<PupilModel>(u))
+                .ToListAsync();
     }
 }
