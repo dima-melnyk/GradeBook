@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -17,16 +18,24 @@ namespace GradeBook.BusinessLogic.Services
     {
         private readonly IEntityRepository<Grade> _repository;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEnumerable<string> _correctRoles = new List<string> { "Teacher", "Admin" };
 
 
-        public GradeService(IEntityRepository<Grade> repository, IMapper mapper)
+        public GradeService(IEntityRepository<Grade> repository, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             _repository = repository;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
-        public Task CreateGrade(Grade newGrade) => _repository.AddAsync(newGrade);
+        public async Task CreateGrade(Grade newGrade)
+        {
+            if (!(await _userManager.GetRolesAsync(await _userManager.Users.FirstOrDefaultAsync(u => u.Id == newGrade.PupilId)))
+               .Contains(Role.Pupil.ToString()))
+                throw new ArgumentException("Only pupil can have grades");
+            await _repository.AddAsync(newGrade);
+        }
 
         public Task UpdateGrade(Grade updateGrade) => _repository.UpdateAsync(updateGrade);
 

@@ -1,6 +1,5 @@
-﻿using GradeBook.DataAccess.Entities;
-using GradeBook.DataAccess.Entities.Base;
-using GradeBook.Models.Read;
+﻿using GradeBook.Models.Read;
+using GradeBook.Models.Write;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,7 +7,7 @@ namespace GradeBook.BusinessLogic.Interfaces
 {
     public interface IAdminService
     {
-        Task Create<TEntity>(TEntity model) where TEntity: UserBase;
+        Task UpdateRole(UpdateRole model);
         Task<IEnumerable<UserModel>> GetUsers();
     }
 }

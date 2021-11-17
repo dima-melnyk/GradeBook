@@ -10,7 +10,7 @@ namespace GradeBook.DataAccess.Entities
         public virtual Class Class { get; set; }
 
         public int TeacherId { get; set; }
-        public virtual Teacher Teacher { get; set; }
+        public virtual ApplicationUser Teacher { get; set; }
 
         public int SubjectId { get; set; }
         public virtual Subject Subject { get; set; }

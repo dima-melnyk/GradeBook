@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GradeBook.DataAccess.Migrations
 {
     [DbContext(typeof(GBContext))]
-    [Migration("20211103152700_Init")]
+    [Migration("20211116143541_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,13 +102,13 @@ namespace GradeBook.DataAccess.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ConcurrencyStamp = "4d2386a1-7caa-4b06-a881-1ac09e89db67",
+                            ConcurrencyStamp = "461b0824-fec6-4bab-accb-d21945187398",
                             Email = "dmytro.melnyk.v@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "DMYTRO.MELNYK.V@GMAIL.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN00t3FHRk245E4bfHrJ6MDJN8ckBtI6gkcai+2bEgg0X8TpHyr10HKKY+KgEcjDBQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOfpoibKfCxLbxqQlCEy2jNynfOOaF4QdNJ+OXyla9E7lv/QzeztSoWe/zopO7D/UQ==",
                             PhoneNumberConfirmed = true,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -198,21 +198,6 @@ namespace GradeBook.DataAccess.Migrations
                     b.ToTable("Lessons");
                 });
 
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("Pupils");
-                });
-
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Subject", b =>
                 {
                     b.Property<int>("Id")
@@ -228,14 +213,20 @@ namespace GradeBook.DataAccess.Migrations
                     b.ToTable("Subjects");
                 });
 
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Teacher", b =>
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.UserClass", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teachers");
+                    b.HasIndex("ClassId");
+
+                    b.ToTable("UserClasses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>
@@ -270,28 +261,28 @@ namespace GradeBook.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "b10d4c4f-ced3-4a1e-b8b5-d8ec739caaae",
+                            ConcurrencyStamp = "293c5a5b-89e2-441e-81e9-11cfb23ef819",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "03c69ee4-aeeb-4b0e-947f-a10d212bea3b",
+                            ConcurrencyStamp = "00d1a061-61a5-4fdd-ad09-03bf054f06b2",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "748fe55e-7b4f-400d-a15b-46d716c75118",
+                            ConcurrencyStamp = "a31dabfe-b13d-48a5-b497-90b185c3ac59",
                             Name = "Pupil",
                             NormalizedName = "PUPIL"
                         },
                         new
                         {
                             Id = 4,
-                            ConcurrencyStamp = "96a0468e-7973-49f9-96e1-1ec2aa7ec844",
+                            ConcurrencyStamp = "9c5a9829-beae-4f46-bda4-945d93dcfeba",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         });
@@ -413,8 +404,8 @@ namespace GradeBook.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("GradeBook.DataAccess.Entities.Pupil", "Pupil")
-                        .WithMany("Grades")
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "Pupil")
+                        .WithMany()
                         .HasForeignKey("PupilId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -438,10 +429,10 @@ namespace GradeBook.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GradeBook.DataAccess.Entities.Teacher", "Teacher")
-                        .WithMany("Lessons")
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "Teacher")
+                        .WithMany()
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Class");
@@ -451,7 +442,7 @@ namespace GradeBook.DataAccess.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
+            modelBuilder.Entity("GradeBook.DataAccess.Entities.UserClass", b =>
                 {
                     b.HasOne("GradeBook.DataAccess.Entities.Class", "Class")
                         .WithMany("Pupils")
@@ -459,26 +450,15 @@ namespace GradeBook.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "ApplicationUser")
+                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "User")
                         .WithOne()
-                        .HasForeignKey("GradeBook.DataAccess.Entities.Pupil", "Id")
+                        .HasForeignKey("GradeBook.DataAccess.Entities.UserClass", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Class");
-                });
 
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Teacher", b =>
-                {
-                    b.HasOne("GradeBook.DataAccess.Entities.ApplicationUser", "ApplicationUser")
-                        .WithOne()
-                        .HasForeignKey("GradeBook.DataAccess.Entities.Teacher", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -542,16 +522,6 @@ namespace GradeBook.DataAccess.Migrations
             modelBuilder.Entity("GradeBook.DataAccess.Entities.Lesson", b =>
                 {
                     b.Navigation("Grades");
-                });
-
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Pupil", b =>
-                {
-                    b.Navigation("Grades");
-                });
-
-            modelBuilder.Entity("GradeBook.DataAccess.Entities.Teacher", b =>
-                {
-                    b.Navigation("Lessons");
                 });
 #pragma warning restore 612, 618
         }
