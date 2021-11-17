@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using GradeBook.BusinessLogic.Interfaces;
+using GradeBook.DataAccess;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Models.Read;
 using GradeBook.Models.Write;
-using GradeBook.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,14 +15,14 @@ namespace GradeBook.BusinessLogic.Services
 {
     public class AdminService : IAdminService
     {
-        private readonly IEntityRepository<UserClass> _repository;
+        private readonly GBContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly List<string> _uniqueRoles = new List<string> { Role.Teacher.ToString(), Role.Pupil.ToString() };
 
-        public AdminService(IEntityRepository<UserClass> repository, UserManager<ApplicationUser> userManager, IMapper mapper)
+        public AdminService(GBContext context, UserManager<ApplicationUser> userManager, IMapper mapper)
         {
-            _repository = repository;
+            _context = context;
             _userManager = userManager;
             _mapper = mapper;
         }
@@ -31,12 +31,16 @@ namespace GradeBook.BusinessLogic.Services
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == model.Id);
             if (user == null)
-                throw new KeyNotFoundException("User cannot be found");
+                throw new ArgumentNullException(null, "User cannot be found");
+
             if (await IsRoleUnique(user, model.Role))
                 throw new ArgumentException("User cannot be pupil and teacher simultaneously");
 
-            if (model.Role == Role.Pupil)
-                await _repository.AddAsync(new UserClass() { Id = user.Id, ClassId = (int)model.ClassId });
+            if (model.Role == Role.Pupil) 
+            {
+                await _context.AddAsync(new UserClass() { Id = user.Id, ClassId = (int)model.ClassId });
+                await _context.SaveChangesAsync();
+            }
 
             await _userManager.AddToRoleAsync(user, model.Role.ToString());
         }

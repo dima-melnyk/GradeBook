@@ -38,11 +38,11 @@ namespace GradeBook.API.Middlewares
                     case MethodAccessException:
                         response.StatusCode = (int)HttpStatusCode.Forbidden;
                         break;
+                    case ArgumentNullException:
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
                     case ArgumentException:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
-                    case KeyNotFoundException:
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     default:
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;

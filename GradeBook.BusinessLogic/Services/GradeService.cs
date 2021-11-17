@@ -50,15 +50,13 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task DeleteGrade(int id) 
         {
-            _context.Grades.Remove(await _context.Grades.FirstOrDefaultAsync(u => u.Id == id));
+            _context.Remove(await GetGradeFromContext(id));
             await _context.SaveChangesAsync();
         }
 
         public async Task<GradeModel> GetGrade(int id, IEnumerable<Claim> claims)
         {
-            var model = await _context.Grades.FirstOrDefaultAsync(u => u.Id == id);
-            if (model == null)
-                throw new KeyNotFoundException("Entity does not found");
+            var model = await GetGradeFromContext(id);
 
             var roles = claims.Where(c => c.Type == ClaimsIdentity.DefaultRoleClaimType)
                 .Select(c => c.Value);
@@ -85,6 +83,11 @@ namespace GradeBook.BusinessLogic.Services
             var lessonClassId = (await _context.Lessons.FirstOrDefaultAsync(l => l.Id == grade.LessonId)).ClassId;
 
             return pupilClassId == lessonClassId;
+        }
+        private async Task<Grade> GetGradeFromContext(int id)
+        {
+            var model = await _context.Grades.FirstOrDefaultAsync(u => u.Id == id);
+            return model ?? throw new ArgumentNullException(null, "Entity does not found");
         }
     }
 }
