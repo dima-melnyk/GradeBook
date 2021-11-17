@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using GradeBook.BusinessLogic.Interfaces;
-using GradeBook.DataAccess;
 using GradeBook.DataAccess.Entities;
-using GradeBook.DataAccess.Entities.Base;
 using GradeBook.Models.Read;
 using GradeBook.Models.Write;
 using GradeBook.Repository.Interfaces;

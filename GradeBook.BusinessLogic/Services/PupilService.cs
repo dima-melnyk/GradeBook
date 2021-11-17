@@ -1,15 +1,11 @@
 ﻿using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.Models.Read;
-using GradeBook.Repository.Interfaces;
 using GradeBook.DataAccess.Entities;
 using System.Threading.Tasks;
 using AutoMapper;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
-using GradeBook.DataAccess.Entities.Base;
 using GradeBook.DataAccess;
 using System;
 
