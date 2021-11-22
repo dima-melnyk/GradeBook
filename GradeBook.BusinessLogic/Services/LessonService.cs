@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using GradeBook.DataAccess;
-using System;
+using GradeBook.BusinessLogic.Extensions;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -31,17 +31,14 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task DeleteLesson(int id)
         {
-            var model = await GetLessonFromContext(id);
+            var model = await _context.GetEntityById<Lesson>(id);
 
             _context.RemoveRange(model.Grades);
             _context.Remove(model);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<LessonModel> GetLesson(int id)
-        {
-            return _mapper.Map<LessonModel>(await GetLessonFromContext(id));
-        }
+        public async Task<LessonModel> GetLesson(int id) => _mapper.Map<LessonModel>(await _context.GetEntityById<Lesson>(id));
 
         public async Task<IEnumerable<LessonModel>> GetLessons(LessonQuery query) => (await _context.Lessons
                 .Where(l => l.TeacherId == query.TeacherId || query.TeacherId == null)
@@ -50,11 +47,5 @@ namespace GradeBook.BusinessLogic.Services
                 .Where(l => l.Date.Equals(query.Date) || query.Date == null)
                 .ToListAsync())
                 .Select(l => _mapper.Map<LessonModel>(l));
-
-        private async Task<Lesson> GetLessonFromContext(int id)
-        {
-            var model = await _context.Lessons.FirstOrDefaultAsync(l => l.Id == id);
-            return model ?? throw new ArgumentNullException(null, "Entity does not found");
-        }
     }
 }

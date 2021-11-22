@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using GradeBook.BusinessLogic.Constants;
 using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Models.Auth;
@@ -38,7 +39,7 @@ namespace GradeBook.BusinessLogic.Services
             newUser.EmailConfirmed = true;
 
             if (await _userManager.FindByEmailAsync(newUser.Email) != null)
-                throw new ArgumentException("User is already created");
+                throw new ArgumentException(AuthExceptionMessages.UserAlreadyCreatedException);
 
             var result = await _userManager.CreateAsync(newUser, user.Password);
             if (!result.Succeeded)
@@ -52,7 +53,7 @@ namespace GradeBook.BusinessLogic.Services
         {
             var user = await _userManager.FindByEmailAsync(loginUser.Email);
             if (user == null || !(await _userManager.CheckPasswordAsync(user, loginUser.Password)))
-                throw new ArgumentException("Your email or password is incorrect");
+                throw new ArgumentException(AuthExceptionMessages.IncorrectDataException);
 
             var claims = new List<Claim>
             {
@@ -68,7 +69,7 @@ namespace GradeBook.BusinessLogic.Services
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             if (!double.TryParse(_configuration["JWT:ExpirationTime"], out double minutes))
-                throw new Exception("Key cannot be generated");
+                throw new Exception(AuthExceptionMessages.GeneratedKeyException);
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],

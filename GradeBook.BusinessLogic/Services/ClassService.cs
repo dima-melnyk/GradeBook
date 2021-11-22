@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using GradeBook.DataAccess;
-using System;
+using GradeBook.BusinessLogic.Extensions;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -30,9 +30,7 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task DeleteClass(int id)
         {
-            var model = await _context.Classes.FirstOrDefaultAsync(c => c.Id == id);
-            if (model == null)
-                throw new ArgumentNullException("Entity does not found");
+            var model = await _context.GetEntityById<Class>(id);
 
             _context.Remove(model);
             await _context.SaveChangesAsync();
@@ -40,7 +38,7 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task<ClassModel> GetClass(int id)
         {
-            var model = await _context.Classes.FirstOrDefaultAsync(c => c.Id == id);
+            var model = await _context.GetEntityById<Class>(id);
             return _mapper.Map<ClassModel>(model);
         }
 

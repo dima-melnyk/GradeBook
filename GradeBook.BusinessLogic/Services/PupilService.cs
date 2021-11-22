@@ -8,6 +8,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using GradeBook.DataAccess;
 using System;
+using GradeBook.BusinessLogic.Extensions;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -30,8 +31,7 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task<PupilModel> GetPupil(int id)
         {
-            var model = (await _context.Users.FirstOrDefaultAsync(u => u.Id == id)) ??
-                throw new KeyNotFoundException("User cannot be found");
+            var model = await _context.GetEntityById<ApplicationUser>(id);;
 
             var pupil = _mapper.Map<PupilModel>(model);
             var className = await (from cl in _context.Classes
