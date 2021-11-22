@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GradeBook.BusinessLogic.Constants;
+using GradeBook.BusinessLogic.Exceptions;
 using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.DataAccess;
 using GradeBook.DataAccess.Entities;
@@ -32,10 +33,10 @@ namespace GradeBook.BusinessLogic.Services
         {
             var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == model.Id);
             if (user == null)
-                throw new ArgumentNullException(null, GlobalExceptionMessages.UserNotFoundException);
+                throw new NotFoundException(Constants.Constants.ExceptionMessages.Global.UserNotFoundException);
 
             if (await IsRoleUnique(user, model.Role))
-                throw new ArgumentException(AdminExceptionMessages.UniqueRoleException);
+                throw new ArgumentException(Constants.Constants.ExceptionMessages.Admin.UniqueRoleException);
 
             if (model.Role == Role.Pupil) 
             {

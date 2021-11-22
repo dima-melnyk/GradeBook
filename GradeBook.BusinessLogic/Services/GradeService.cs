@@ -35,10 +35,10 @@ namespace GradeBook.BusinessLogic.Services
         {
             if (!(await _userManager.GetRolesAsync(await _userManager.Users.FirstOrDefaultAsync(u => u.Id == newGrade.PupilId)))
                .Contains(Role.Pupil.ToString()))
-                throw new ArgumentException(GradeExceptionMessages.IncorrectRoleException);
+                throw new ArgumentException(Constants.Constants.ExceptionMessages.Grade.IncorrectRoleException);
 
             if (!(await IsPupilFromLessonClass(newGrade)))
-                throw new ArgumentException(GradeExceptionMessages.IncorrectPupilException);
+                throw new ArgumentException(Constants.Constants.ExceptionMessages.Grade.IncorrectPupilException);
 
             await _context.AddAsync(newGrade);
             await _context.SaveChangesAsync();
@@ -66,7 +66,7 @@ namespace GradeBook.BusinessLogic.Services
             var pupilId = int.Parse(claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value);
 
             if (!(pupilId == model.Pupil.Id || IsUserInCorrectRole(roles)))
-                throw new MethodAccessException(GradeExceptionMessages.IllegalAccessException);
+                throw new MethodAccessException(Constants.Constants.ExceptionMessages.Grade.IllegalAccessException);
             return _mapper.Map<GradeModel>(model);
         }
 

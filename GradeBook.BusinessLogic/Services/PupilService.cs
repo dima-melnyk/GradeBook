@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using GradeBook.DataAccess;
 using System;
 using GradeBook.BusinessLogic.Extensions;
+using GradeBook.BusinessLogic.Constants;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -39,7 +40,7 @@ namespace GradeBook.BusinessLogic.Services
                                    join au in _context.Users on uc.Id equals au.Id
                                    where au.Id == id
                                    select cl.Name).FirstOrDefaultAsync();
-            pupil.ClassName = className ?? throw new ArgumentException("User is not a pupil");
+            pupil.ClassName = className ?? throw new ArgumentException(Constants.Constants.ExceptionMessages.Pupil.IncorrectRoleException);
 
             return pupil;
         }

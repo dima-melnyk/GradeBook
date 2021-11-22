@@ -1,7 +1,7 @@
 ﻿using GradeBook.BusinessLogic.Constants;
+using GradeBook.BusinessLogic.Exceptions;
 using GradeBook.DataAccess.Entities.Base.Interface;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Threading.Tasks;
 
 namespace GradeBook.BusinessLogic.Extensions
@@ -12,7 +12,7 @@ namespace GradeBook.BusinessLogic.Extensions
         {
             var model = await context.Set<T>().FirstOrDefaultAsync(t => t.Id == id);
 
-            return model ?? throw new ArgumentNullException(null, GlobalExceptionMessages.UserNotFoundException);
+            return model ?? throw new NotFoundException(Constants.Constants.ExceptionMessages.Global.NotFoundException);
         }
     }
 }
