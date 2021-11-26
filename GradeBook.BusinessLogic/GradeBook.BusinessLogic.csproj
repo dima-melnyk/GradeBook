@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GradeBook.Models\GradeBook.Models.csproj" />
-    <ProjectReference Include="..\GradeBook.Repository\GradeBook.Repository.csproj" />
   </ItemGroup>
 
 </Project>

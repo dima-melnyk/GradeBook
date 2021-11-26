@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using GradeBook.BusinessLogic.Interfaces;
+using GradeBook.DataAccess;
 using GradeBook.DataAccess.Entities;
 using GradeBook.Models.Read;
-using GradeBook.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +12,22 @@ namespace GradeBook.BusinessLogic.Services
 {
     public class SubjectService : ISubjectService
     {
-        private readonly IEntityRepository<Subject> _repository;
+        private readonly GBContext _context;
         private readonly IMapper _mapper;
 
-        public SubjectService(IEntityRepository<Subject> repository, IMapper mapper)
+        public SubjectService(GBContext context, IMapper mapper)
         {
-            _repository = repository;
+            _context = context;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<SubjectModel>> GetSubjects() => (await _repository.GetAll().ToListAsync()).Select(_mapper.Map<SubjectModel>);
+        public async Task<IEnumerable<SubjectModel>> GetSubjects() => 
+            (await _context.Subjects.ToListAsync()).Select(_mapper.Map<SubjectModel>);
 
-        public Task CreateSubject(Subject newSubject) => _repository.AddAsync(newSubject);
+        public async Task CreateSubject(Subject newSubject) 
+        {
+            await _context.AddAsync(newSubject);
+            await _context.SaveChangesAsync();
+        }
     }
 }

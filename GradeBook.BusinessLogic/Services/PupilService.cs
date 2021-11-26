@@ -8,6 +8,8 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using GradeBook.DataAccess;
 using System;
+using GradeBook.BusinessLogic.Extensions;
+using GradeBook.BusinessLogic.Constants;
 
 namespace GradeBook.BusinessLogic.Services
 {
@@ -30,8 +32,7 @@ namespace GradeBook.BusinessLogic.Services
 
         public async Task<PupilModel> GetPupil(int id)
         {
-            var model = (await _context.Users.FirstOrDefaultAsync(u => u.Id == id)) ??
-                throw new KeyNotFoundException("User cannot be found");
+            var model = await _context.GetEntityById<ApplicationUser>(id);;
 
             var pupil = _mapper.Map<PupilModel>(model);
             var className = await (from cl in _context.Classes
@@ -39,7 +40,7 @@ namespace GradeBook.BusinessLogic.Services
                                    join au in _context.Users on uc.Id equals au.Id
                                    where au.Id == id
                                    select cl.Name).FirstOrDefaultAsync();
-            pupil.ClassName = className ?? throw new ArgumentException("User is not a pupil");
+            pupil.ClassName = className ?? throw new ArgumentException(Constants.Constants.ExceptionMessages.Pupil.IncorrectRoleException);
 
             return pupil;
         }

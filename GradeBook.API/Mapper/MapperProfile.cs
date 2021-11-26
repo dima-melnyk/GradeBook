@@ -25,19 +25,16 @@ namespace GradeBook.API.Mapper
 
             CreateMap<CreateLesson, Lesson>();
             CreateMap<Lesson, LessonModel>()
-                .ForMember(l => l.TeacherName, opt =>
-                    opt.MapFrom(l => l.Teacher.FirstName + " " + l.Teacher.LastName))
+                .ForMember(l => l.TeacherName, opt => opt.MapFrom(l => l.Teacher.ToString()))
                 .ForMember(l => l.Date, opt => opt.MapFrom(l => l.Date.ToString("dd/MM/yyyy")));
 
             CreateMap<CreateGrade, Grade>();
             CreateMap<UpdateGrade, Grade>();
             CreateMap<Grade, GradeModel>()
-                .ForMember(g => g.PupilName, opt =>
-                    opt.MapFrom(g => g.Pupil.FirstName + " " + g.Pupil.LastName))
+                .ForMember(g => g.PupilName, opt => opt.MapFrom(g => g.Pupil.ToString()))
                 .ForMember(g => g.SubjectName, opt => opt.MapFrom(g => g.Lesson.Subject.Name))
                 .ForMember(g => g.Date, opt => opt.MapFrom(g => g.Lesson.Date.ToString("dd/MM/yyyy")))
-                .ForMember(g => g.TeacherName, opt =>
-                    opt.MapFrom(g => g.Lesson.Teacher.FirstName + " " + g.Lesson.Teacher.LastName));
+                .ForMember(g => g.TeacherName, opt => opt.MapFrom(g => g.Lesson.Teacher.ToString()));
 
             CreateMap<RegisterUser, ApplicationUser>();
             CreateMap<ApplicationUser, UserModel>()

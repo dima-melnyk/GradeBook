@@ -3,43 +3,44 @@ using GradeBook.BusinessLogic.Interfaces;
 using GradeBook.Models.Read;
 using GradeBook.BusinessLogic.Queries;
 using GradeBook.DataAccess.Entities;
-using GradeBook.Repository.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using GradeBook.DataAccess;
+using GradeBook.BusinessLogic.Extensions;
 
 namespace GradeBook.BusinessLogic.Services
 {
     public class LessonService : ILessonService
     {
-        private readonly IEntityRepository<Lesson> _repository;
-        private readonly IEntityRepository<Grade> _gradeRepository;
+        private readonly GBContext _context;
         private readonly IMapper _mapper;
 
-        public LessonService(IEntityRepository<Lesson> repository, IEntityRepository<Grade> gradeRepository, IMapper mapper)
+        public LessonService(GBContext context, IMapper mapper)
         {
-            _repository = repository;
-            _gradeRepository = gradeRepository;
+            _context = context;
             _mapper = mapper;
         }
 
-        public Task CreateLesson(Lesson newLesson) => _repository.AddAsync(newLesson);
+        public async Task CreateLesson(Lesson newLesson)
+        {
+            await _context.AddAsync(newLesson);
+            await _context.SaveChangesAsync();
+        }
 
         public async Task DeleteLesson(int id)
         {
-            var model = await _repository.GetByIdAsync(id);
-            await _gradeRepository.RemoveRange(model.Grades);
-            await _repository.RemoveAsync(model);
+            var model = await _context.GetEntityById<Lesson>(id);
+
+            _context.RemoveRange(model.Grades);
+            _context.Remove(model);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<LessonModel> GetLesson(int id)
-        {
-            var model = await _repository.GetByIdAsync(id);
-            return _mapper.Map<LessonModel>(model);
-        }
+        public async Task<LessonModel> GetLesson(int id) => _mapper.Map<LessonModel>(await _context.GetEntityById<Lesson>(id));
 
-        public async Task<IEnumerable<LessonModel>> GetLessons(LessonQuery query) => (await _repository.GetAll()
+        public async Task<IEnumerable<LessonModel>> GetLessons(LessonQuery query) => (await _context.Lessons
                 .Where(l => l.TeacherId == query.TeacherId || query.TeacherId == null)
                 .Where(l => l.ClassId == query.ClassId || query.ClassId == null)
                 .Where(l => l.SubjectId == query.SubjectId || query.SubjectId == null)
