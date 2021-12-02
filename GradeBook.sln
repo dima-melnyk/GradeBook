@@ -8,11 +8,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeBook.API", "GradeBook.API\GradeBook.API.csproj", "{584E6B36-5E87-463A-9594-4364FB1C1102}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeBook.API", "GradeBook.API\GradeBook.API.csproj", "{584E6B36-5E87-463A-9594-4364FB1C1102}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeBook.BusinessLogic", "GradeBook.BusinessLogic\GradeBook.BusinessLogic.csproj", "{4937A70E-C767-4431-B399-95F9B9016DF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeBook.BusinessLogic", "GradeBook.BusinessLogic\GradeBook.BusinessLogic.csproj", "{4937A70E-C767-4431-B399-95F9B9016DF7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D0685612-E18E-464C-BD73-22F28ADE0921} = {D0685612-E18E-464C-BD73-22F28ADE0921}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GradeBook.DataAccess", "GradeBook.DataAccess\GradeBook.DataAccess.csproj", "{356E276F-D21F-4825-949F-7AAFD9A13E5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeBook.DataAccess", "GradeBook.DataAccess\GradeBook.DataAccess.csproj", "{356E276F-D21F-4825-949F-7AAFD9A13E5F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GradeBook.Models", "GradeBook.Models\GradeBook.Models.csproj", "{D0685612-E18E-464C-BD73-22F28ADE0921}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +37,10 @@ Global
 		{356E276F-D21F-4825-949F-7AAFD9A13E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{356E276F-D21F-4825-949F-7AAFD9A13E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{356E276F-D21F-4825-949F-7AAFD9A13E5F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0685612-E18E-464C-BD73-22F28ADE0921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0685612-E18E-464C-BD73-22F28ADE0921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0685612-E18E-464C-BD73-22F28ADE0921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0685612-E18E-464C-BD73-22F28ADE0921}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
